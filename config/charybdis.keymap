@@ -14,7 +14,7 @@
         compatible = "zmk,input-listener";
         device = <&trackball>;
         input-processors = <&zip_xy_scaler 1 2>, <&zip_temp_layer 4 400>;
- // Switch to auto-mouse temp layer, decrease sensitivity
+        // Switch to auto-mouse temp layer, decrease sensitivity
         scroll {
             layers = <5>; // SCROLL
             input-processors =
@@ -24,23 +24,9 @@
         };
     };
 
+    // Removed mouse button combos so clicks only come from J/K/L
     combos {
         compatible = "zmk,combos";
-
-        LeftClickRight {
-            bindings = <&mkp LCLK>;
-            key-positions = <19 20>;
-        };
-
-        RightClickRight {
-            bindings = <&mkp RCLK>;
-            key-positions = <20 21>;
-        };
-
-        MiddleClickRight {
-            bindings = <&mkp MCLK>;
-            key-positions = <21 22>;
-        };
 
         ParaLeft {
             bindings = <&kp LEFT_PARENTHESIS>;
@@ -121,7 +107,7 @@
 &kp ESC  &kp Q             &kp W             &kp E          &kp R               &kp T            &kp Y      &kp U               &kp I          &kp O              &kp P                 &kp BSPC
 &kp TAB  &u_mt LEFT_GUI A  &u_mt LEFT_ALT S  &u_mt LCTRL D  &u_mt LEFT_SHIFT F  &kp G            &kp H      &u_mt LEFT_SHIFT J  &u_mt RCTRL K  &u_mt RIGHT_ALT L  &u_mt RIGHT_GUI SEMI  &kp APOS
 &mo 5    &kp Z             &kp X             &kp C          &kp V               &kp B            &kp N      &kp M               &kp COMMA      &kp DOT            &kp FSLH              &mo 5
-                                             &mo 1          &kp SPACE           &kp BACKSPACE    &kp ENTER  &kp SPACE
+                                             &mo 1          &u_lt 5 SPACE       &kp BACKSPACE    &kp ENTER  &kp SPACE
             >;
         };
 
@@ -157,7 +143,7 @@
 &trans  &trans  &trans  &trans     &trans  &trans       &trans  &trans     &trans     &trans     &trans  &trans
 &trans  &trans  &trans  &trans     &trans  &trans       &trans  &mkp LCLK  &mkp MCLK  &mkp RCLK  &trans  &trans
 &trans  &trans  &trans  &trans     &trans  &trans       &trans  &trans     &trans     &trans     &trans  &trans
-                        &mkp LCLK  &trans  &mkp RCLK    &trans  &trans
+                        &trans     &trans  &trans       &trans  &trans
             >;
         };
 
