@@ -1,23 +1,39 @@
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 
-&trackball_listener {
-    /* base processor chain on all layers */
-    input-processors = <&zip_xy_scaler 5 5>;
+/ {
+    mouse_layer_listener {
+        compatible = "zmk,input-listener";
+        device = <&trackball_split>;
+        input-processors = <&zip_xy_scaler 5 5>;
+    };
+};
 
-    /* layer-8 scroll override */
+&trackball_listener {
+    /* base processor chain on all layers with 45-degree clockwise rotation */
+    input-processors = <&zip_xy_scaler 5 5 &zip_xy_rotator 45>;
+
+    /* auto-mouse layer activation */
+    auto_mouse {
+        compatible = "zmk,input-listener-layer";
+        layer = <3>;  // Mouse layer will be layer 3 (SYM layer moves to 4)
+        autorelease-ms = <600>;  // Auto-release after 600ms of inactivity
+    };
+
+    /* layer-9 scroll override */
     scroller: scroller {
-        layers           = <7>;
+        layers           = <8>;
         input-processors = <
             &zip_xy_scaler 1 15                              // Scales the scroll speed
             &zip_xy_to_scroll_mapper                         // Converts XY movement to scroll events
             &zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT) // Inverts the scroll direction
+            &zip_xy_rotator 45                               // 45-degree rotation for consistent feel
         >;
     };
 
-    /* layer-7 slow-pointer override */
+    /* layer-8 slow-pointer override */
     slow_pointer: slow_pointer {
-        layers           = <6>;
-        input-processors = <&zip_xy_scaler 2 6>;
+        layers           = <7>;
+        input-processors = <&zip_xy_scaler 2 6 &zip_xy_rotator 45>;
     };
 };
