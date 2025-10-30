@@ -1,20 +1,16 @@
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 
-/ {
-    auto_mouse {
-        compatible = "zmk,input-listener-layer";
-        layer = <3>;  // Mouse layer
-        autorelease-ms = <600>;  // Auto-release after 600ms of inactivity
-    };
-};
-
 &trackball_listener {
     /* base processor chain on all layers */
     input-processors = <&zip_xy_scaler 5 5>;
 
     /* auto-mouse layer activation */
-    auto-mouse-layer = <&auto_mouse>;
+    auto-mouse-layer {
+        compatible = "zmk,input-listener-layer";
+        layer = <3>;  // Mouse layer
+        autorelease-ms = <600>;  // Auto-release after 600ms of inactivity
+    };
 
     /* layer-8 scroll override */
     scroller: scroller {
