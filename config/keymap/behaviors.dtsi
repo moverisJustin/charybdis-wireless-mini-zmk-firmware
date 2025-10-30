@@ -187,7 +187,7 @@
             tapping-term-ms = <200>;
             quick-tap-ms = <150>;
             /* hold -> momentary layer, tap -> toggle layer */
-            bindings = <&mo>, <&tg>;
+            bindings = <&mo>, <&tog>;
         };
 
         td_bs: td_bs {
