@@ -71,7 +71,7 @@
             >;
         };
 
-        MOUSE {
+        mouse_layer: MOUSE {
             display-name = "Mouse";
             bindings = <
 &trans   &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
