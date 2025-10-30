@@ -1,14 +1,6 @@
 #include <input/processors.dtsi>
 #include <dt-bindings/zmk/input_transform.h>
 
-/ {
-    mouse_layer_listener {
-        compatible = "zmk,input-listener";
-        device = <&trackball_split>;
-        input-processors = <&zip_xy_scaler 5 5>;
-    };
-};
-
 &trackball_listener {
     /* base processor chain on all layers with 45-degree clockwise rotation */
     input-processors = <&zip_xy_scaler 5 5 &zip_xy_rotator 45>;
