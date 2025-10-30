@@ -37,7 +37,7 @@ layers:
   - {t: ., s: ':'}
   - {t: '?', s: '!'}
   - /
-  - {t: '&tg 1', h: Nav}
+  - {t: Num, h: Nav}
   - SPACE
   - BACK SPACE
   - ENTER
