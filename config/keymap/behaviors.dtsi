@@ -180,6 +180,16 @@
             bindings = <&mo>, <&to>;
         };
 
+        ht_tg_num_nav: ht_tg_num_nav {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            /* hold -> momentary layer, tap -> toggle layer */
+            bindings = <&mo>, <&tg>;
+        };
+
         td_bs: td_bs {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
