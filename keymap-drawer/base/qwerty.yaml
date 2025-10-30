@@ -37,13 +37,13 @@ layers:
   - {t: ., s: ':'}
   - {t: '?', s: '!'}
   - /
-  - {t: Num, h: Nav}
+  - {t: '&tg 1', h: Nav}
   - SPACE
   - BACK SPACE
   - ENTER
   - SPACE
   Num:
-  - ''
+  - ZMK Studio
   - ''
   - ''
   - ''
@@ -146,10 +146,10 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
   - L CLK
   - Mid CLK
   - R CLK
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
