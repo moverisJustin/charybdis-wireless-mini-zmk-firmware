@@ -98,9 +98,9 @@ layers:
   - TMUX SYNC
   - ''
   - TAB
-  - BACK
-  - LALT
-  - LSHFT
+  - WHEEL L
+  - WHEEL U
+  - WHEEL R
   - LCTRL
   - FWD
   - HSPLIT
@@ -122,8 +122,8 @@ layers:
   - END
   - ''
   - {t: Base, h: toggle, type: held}
-  - ''
-  - ''
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - ''
   - {t: ▽, type: trans}
   Mouse:
@@ -143,7 +143,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: ▽, type: trans}
+  - {t: Resv, h: toggle}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - L CLK
