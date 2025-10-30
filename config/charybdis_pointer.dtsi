@@ -10,7 +10,8 @@
     scroller: scroller {
         layers           = <9>;
         input-processors = <
-            &zip_xy_scaler 1 15                              // Scales the scroll speed
+            &zip_xy_scaler 4 4                               // Base mouse sensitivity matching BASE layer
+            &zip_xy_scaler 2 15                              // Scales the scroll speed
             &zip_xy_to_scroll_mapper                         // Converts XY movement to scroll events
             &zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT) // Inverts the scroll direction
         >;
