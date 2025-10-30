@@ -1,7 +1,7 @@
 layout: {zmk_keyboard: qwerty}
 layers:
   Base:
-  - SEARCH
+  - ESC
   - Q
   - W
   - E
@@ -25,7 +25,7 @@ layers:
   - {t: L, h: LALT}
   - {t: ;, h: RCMD}
   - DEL
-  - CLIP HIST
+  - LSHIFT
   - Z
   - X
   - C
@@ -37,11 +37,11 @@ layers:
   - {t: ., s: ':'}
   - {t: '?', s: '!'}
   - /
-  - ESC SCRL SLOW
-  - SYM LCLK
-  - BS NUM
+  - {t: Num, h: Nav}
+  - SPACE
+  - BACK SPACE
   - ENTER
-  - SPACE NAV
+  - SPACE
   Num:
   - ''
   - ''
@@ -121,10 +121,52 @@ layers:
   - PG UP
   - END
   - ''
+  - {type: held}
   - ''
   - ''
   - ''
-  - ''
+  - {t: ▽, type: trans}
+  Mouse:
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - L CLK
+  - Mid CLK
+  - R CLK
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   Sym:
   - ''
