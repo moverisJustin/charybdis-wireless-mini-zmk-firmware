@@ -208,7 +208,7 @@
         td_layers: td_layer_swap {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            bindings = <&to 0>, <&to 6>; // tap, double_tap
+            bindings = <&to 4>, <&to 6>; // tap -> SYM (4), double_tap -> EXTRAS (6)
         };
 
         td_clk_scrl: td_click_or_scroll {
