@@ -24,7 +24,7 @@ Download your choice of firmware from the Releases page. Choose a combination of
 8. You should now be able to use your keyboard
 
 > [!NOTE]  
-> If you are flashing the firmware for the first time, or if you're switching between the dongle and the Bluetooth/USB configuration, flash the reset firmware to all the devices first
+> If you are flashing the firmware for the first time, or if you're switching between the dongle and the Bluetooth/USB configuration, flash the reset firmware to all the devices first. Do not follow the instructions you might find in other repositories to delete all of the files from the device and eject and then re-load as this can brick your Nice!Nano or the SeedStudio in the prospector (ask me how I know...).
 
 ### Overview & Usage
 
@@ -50,7 +50,7 @@ These are the layers as of 10/31/2025. I do not intend to use this keyboard for 
 ⌨️ Keyboard Layer Activation Keys
 | # | Layer      | Purpose                                                 |
 | - | ---------- | ------------------------------------------------------- |
-| 0 | **BASE**   | Standard typing layer                                   |
+| 0 | **BASE**   | Standard typing layer. Currently QWERTY.                |
 | 1 | **NUM**    | On press of `K36`                                       |
 | 2 | **NAV**    | On hold of `K36`                                        |
 | 3 | **MOUSE**  | Automatically activated by trackball movement           |
@@ -58,7 +58,7 @@ These are the layers as of 10/31/2025. I do not intend to use this keyboard for 
 | 5 | **GAME**   |                                                         |
 | 6 | **EXTRAS** | `K38 + K39` (inner most thumb key on each half)         |
 | 7 | **SLOW**   |                                                         |
-| 8 | **SCROLL** | Activated by holding down the K16 currently                    |
+| 8 | **SCROLL** | Activated by holding down the K16 currently             |
 
 🏠 Home-Row Mods (That Aren't Really)
 
@@ -104,7 +104,7 @@ I don't like home row mods because I just haven't ever really committed to using
 | `K33`                         | . and > (on shift) |
 | `K34`                         | ? and / (on shift instead of exclamation point on shift) |
 | `K35`                         | - and _ (on shift) |
-| `K37`                         | **Layer Shift** to Sym on tap and to Scroll on hold |
+| `K37`                         | **Layer Shift** to Sym on tap and to Scroll on hold. Maybe Slow on double tap? |
 | `K16`                         | Make it so that it is only the F key. No longer tied to a scroll layer shift |
 
 ⌨️ Nav layer changes I still need to make
@@ -141,14 +141,13 @@ I don't like home row mods because I just haven't ever really committed to using
 | `K14`                         | Left Arrow |
 | `K17`                         | Nothing. This is currently set to a shift. We don't need that since the transparency will allow us to still access a shift key |
 
-
 ⌨️ Symbol layer changes I still need to make
 | Trigger Keys                  | Result                                 |
 | -------------------------     | -------------------------------------- |
 | `K18`                         | $ |
 | `K30`                         | # |
 
-
+I might be able to do away with the Extras layer with a few more additions to the Num, Nav, and Sym layers. I will do away with the Game layer regardless as it is not useful for me.
 
 ![keymap base](keymap-drawer/qwerty.svg)
 
