@@ -23,15 +23,7 @@
 // ╰──────┴──────┴──────┼──────┼──────┼──────┤  ├──────┼──────┼──────┴──────┴──────┴──────╯
 //                         36     37     38        39     40
 //                      ╰──────┴──────┴──────╯  ╰──────┴──────╯
-// #define BASE    0
-// #define NUM     1
-// #define NAV     2
-// #define MOUSE   3
-// #define SYM     4
-// #define GAME    5
-// #define EXTRAS  6
-// #define SLOW    7
-// #define SCROLL  8
+ 
 
     keymap {
         compatible = "zmk,keymap";
