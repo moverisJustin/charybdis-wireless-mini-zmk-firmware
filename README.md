@@ -151,7 +151,7 @@ I might be able to do away with the Extras layer with a few more additions to th
 
 ![keymap base](keymap-drawer/qwerty.svg)
 
-⚙️ Other things I want to implement over time.
+⚙️ Other things I want to implement over time but not right now.
 - **TARMAK transition to Colemak:** One of the reasons for moving to the Keyball and then the Charybdis was to begin transitioning from QWERTY to Colemak. However, given the large transition from the Ergodox to the Keyball61 and now to the Charybdis Mini, I want to stage my transition to a new keymap. [Tarmak](https://dreymar.colemak.org/tarmak-intro.html) was built as a step-wise transition from QWERTY to Colemak (specifically I believe I will end up using the DH variant of Colemak).
 - **Timeless home row mods:** Based on [urob's](https://github.com/urob/zmk-config#timeless-homerow-mods) work and configured on the BASE layer with balanced flavor on both halves (280 ms tapping-term, and quick-tap with prior-idle tuning). As I said above, I do not currently use homerow mods, but I do see their value and would like to try to implement them over time.
 - **Thumb-scroll mode:** Hold a thumb button (K36 through 40) while moving the trackball to turn motion into scroll. Currently I have this mapped to the F key (K16). 
@@ -187,6 +187,8 @@ By default both Bluetooth and Dongle formats will build firmware pairs for the Q
 **Single keymap:**
 Any `.keymap` files in the `config/keymap/` directory will be automatically built. By default QWERTY and Colemak DH are included, but you can add or remove as many as you'd like as long as there is at least one .keymap file to process.
 Some additional keymaps are available in the extra-keymaps directory.
+
+This is where the tarmak steps will reside. 
 
 **Single shield format (Dongle or Bluetooth):**
 Delete the shield directory (charybdis_dongle or charybdis_bt) from the config/boards/shields/ folder to build only the format you need.
