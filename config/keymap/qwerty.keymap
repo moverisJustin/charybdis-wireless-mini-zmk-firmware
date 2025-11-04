@@ -37,7 +37,7 @@
 // ├───────────────┼────────────────┼────────────────┼─────────────────┼─────────────────┼──────┤  ├──────┼──────────────────┼──────────────────┼─────────────────┼────────────────────────┼─────────────┤
     &td_lshift_caps &td_z_undo_redo  &td_x_cut        &td_c_copy         &td_v_paste       &td_b_bold &kp N  &kp M              &mm_comma_lt       &td_period_exclamation &mm_qm_slash             &td_minus_emdash_morph
 // ╰───────────────┴────────────────┴────────────────┼─────────────────┼─────────────────┼──────┤  ├──────┼──────────────────┼──────────────────┴─────────────────┴────────────────────────┴─────────────╯
-                                                              &ht_tg_num_nav 2 1  &ht_k37_sym_scroll  &kp BACKSPACE     &kp ENTER      &kp SPACE
+                                                              &ht_tg_num_nav 2 1  &ht_k37_sym_scroll 8 4  &kp BACKSPACE     &kp ENTER      &kp SPACE
                                                          // ╰───────────────┴─────────────┴────────────────╯  ╰──────────────┴──────────────╯
                                                          //   Tap: NUM (1)   Hold: NAV (2)    Space           Enter          Space
             >;
@@ -47,8 +47,8 @@
             display-name = "Num";
             bindings = <
 &studio_unlock  &none  &none  &kp UP           &none          &none            &kp N0             &kp N1             &kp N2             &kp N3             &none              &kp PLUS
-&trans          &none  &none  &kp LEFT_ARROW   &kp DOWN       &kp RIGHT_ARROW  &kp COMMA         &none              &none              &none              &kp N4             &kp N5             &kp N6
-&none           &none  &kp X  &none            &none          &none            &kp KP_MINUS      &kp N8             &kp N8             &kp N9             &none              &none              &none
+&trans          &none  &none  &kp LEFT_ARROW   &kp DOWN       &kp RIGHT_ARROW  &none              &none              &none              &kp N4             &kp N5             &kp N6
+&none           &none  &none  &none            &none          &none            &kp KP_MINUS      &kp N8             &kp N8             &kp N9             &none              &none
                                                               &to 0           &none              &trans             &kp N0             &kp SPACE
             >;
         };

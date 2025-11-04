@@ -292,11 +292,11 @@
         // Hold-tap for K37: Sym on tap, Scroll on hold
         ht_k37_sym_scroll: ht_k37_sym_scroll {
             compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <0>;
+            #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <200>;
             quick-tap-ms = <150>;
-            bindings = <&mo 8>, <&to 4>; // hold = SCROLL (8), tap = SYM (4)
+            bindings = <&mo>, <&to>; // hold = SCROLL, tap = SYM (parameters passed when used)
         };
 
         // Double-tap shortcuts for Z, X, C, V (preserving hold-tap modifier functionality)
