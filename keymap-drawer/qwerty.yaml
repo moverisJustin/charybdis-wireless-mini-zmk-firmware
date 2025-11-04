@@ -9,15 +9,15 @@ layers:
   - T
   - Y
   - U
-  - I
-  - O
+  - '&td_i_italics'
+  - '&td_o_underline'
   - P
-  - L_BASE L_GAME
+  - {t: '=', s: +}
   - TAB
   - A
-  - S
+  - '&td_s_save'
   - D
-  - {t: F, h: Scroll}
+  - F
   - G
   - H
   - J
@@ -25,20 +25,20 @@ layers:
   - L
   - ;
   - ''''
-  - LSHIFT
-  - {t: Z, h: LCMD}
-  - {t: X, h: LALT}
-  - {t: C, h: LSHFT}
-  - {t: V, h: LCTRL}
-  - B
+  - '&td_lshift_caps'
+  - '&td_z_undo_redo'
+  - '&td_x_cut'
+  - '&td_c_copy'
+  - '&td_v_paste'
+  - '&td_b_bold'
   - N
   - M
-  - {t: ',', s: ;}
-  - {t: ., s: ':'}
-  - {t: '?', s: '!'}
-  - /
+  - {t: ',', s: <}
+  - '&td_period_exclamation'
+  - {t: '?', s: /}
+  - '&td_minus_emdash_morph'
   - {t: Num, h: Nav}
-  - SPACE
+  - {t: Sym, h: Scroll}
   - BACK SPACE
   - ENTER
   - SPACE
@@ -46,39 +46,39 @@ layers:
   - ZMK Studio
   - ''
   - ''
+  - UP
   - ''
   - ''
+  - '0'
+  - '1'
+  - '2'
+  - '3'
   - ''
   - +
-  - {t: '7', s: F7}
-  - {t: '8', s: F8}
-  - {t: '9', s: F9}
-  - {t: '%', s: F10}
-  - ''
   - {t: ▽, type: trans}
   - ''
   - ''
+  - LEFT
+  - DOWN
+  - RIGHT
   - ''
-  - BACK SPACE
-  - LSHIFT
+  - ''
+  - ''
+  - '4'
+  - '5'
+  - '6'
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
+  - ''
   - '-'
-  - {t: '4', s: F4}
-  - {t: '5', s: F5}
-  - {t: '6', s: F6}
-  - {t: '*', s: F11}
+  - '8'
+  - '8'
+  - '9'
   - ''
   - ''
-  - ''
-  - X
-  - ''
-  - ''
-  - ''
-  - '='
-  - {t: '1', s: F1}
-  - {t: '2', s: F2}
-  - {t: '3', s: F3}
-  - {t: ., s: F12}
-  - /
   - {t: Base, h: toggle}
   - ''
   - {t: ▽, type: trans}
@@ -92,9 +92,9 @@ layers:
   - WHEEL U
   - WHEEL R
   - TMUX DETCH
-  - TMUX ATTCH
-  - TMUX NEXT
-  - TMUX SESH
+  - '&macro_desktop_left'
+  - UP
+  - '&macro_desktop_right'
   - TMUX SYNC
   - ''
   - TAB
@@ -124,8 +124,8 @@ layers:
   - {t: Base, h: toggle, type: held}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - ''
-  - {t: ▽, type: trans}
+  - '&td_volume_down_mute'
+  - VOLUME UP
   Mouse:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -143,7 +143,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {t: Resv, h: toggle}
+  - {t: Scroll, h: toggle}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - L CLK
@@ -171,7 +171,7 @@ layers:
   Sym:
   - ''
   - '~'
-  - $
+  - {t: ▽, type: trans}
   - ^
   - '&move_line_up'
   - '&mc_add_above'
@@ -187,7 +187,7 @@ layers:
   - '>'
   - BACK SPACE
   - '&delete_line'
-  - '`'
+  - $
   - '-'
   - (
   - )
@@ -196,10 +196,10 @@ layers:
   - ''
   - ~/
   - ''
-  - '#'
+  - {t: ▽, type: trans}
   - '&move_line_down'
   - '&mc_add_below'
-  - '```'
+  - '#'
   - '='
   - '{'
   - '}'
@@ -210,48 +210,6 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  Game:
-  - '1'
-  - TAB
-  - Q
-  - W
-  - E
-  - R
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - {t: ▽, type: trans}
-  - '2'
-  - LCTRL
-  - A
-  - S
-  - D
-  - F
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - '3'
-  - LSHFT
-  - Y
-  - X
-  - C
-  - V
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - ''
-  - {t: Base, h: toggle}
-  - SPACE
-  - LEFT ALT
-  - ''
-  - ''
   Xtra:
   - ZMK Studio
   - SHRUG
@@ -395,7 +353,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
-  - {type: held}
+  - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -416,7 +374,7 @@ layers:
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: Base, h: toggle}
-  - {t: ▽, type: trans}
+  - {type: held}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
   - {t: ▽, type: trans}
@@ -426,9 +384,6 @@ combos:
   l: [Base]
 - p: [38, 39]
   k: L_BASE L_EXTRA
-- p: [25, 26]
-  k: L CLK
-- p: [26, 27]
-  k: Mid CLK
-- p: [27, 28]
-  k: R CLK
+- p: [5, 6]
+  k: '&macro_screenshot'
+  l: [Base]
