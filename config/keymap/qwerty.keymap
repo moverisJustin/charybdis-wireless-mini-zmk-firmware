@@ -31,13 +31,13 @@
             display-name = "Base";
             bindings = <
 // ╭───────────────┬────────────────┬────────────────┬─────────────────┬─────────────────┬──────╮  ╭──────┬──────────────────┬──────────────────┬─────────────────┬────────────────────────┬─────────────╮
-    &kp ESC         &kp Q            &kp W            &kp E             &kp R             &kp T     &kp Y  &kp U              &kp I              &kp O             &kp P                    &td_layers
+    &kp ESC         &kp Q            &kp W            &kp E             &kp R             &kp T     &kp Y  &kp U              &td_i_italics      &td_o_underline   &kp P                    &mm_eq_plus
 // ├───────────────┼────────────────┼────────────────┼─────────────────┼─────────────────┼──────┤  ├──────┼──────────────────┼──────────────────┼─────────────────┼────────────────────────┼─────────────┤
-    &kp TAB         &kp A            &kp S            &kp D              &lt 9 F          &kp G     &kp H  &kp J              &kp K              &kp L             &kp SEMICOLON            &kp APOSTROPHE
+    &kp TAB         &kp A            &td_s_save       &kp D              &kp F            &kp G     &kp H  &kp J              &kp K              &kp L             &kp SEMICOLON            &kp APOSTROPHE
 // ├───────────────┼────────────────┼────────────────┼─────────────────┼─────────────────┼──────┤  ├──────┼──────────────────┼──────────────────┼─────────────────┼────────────────────────┼─────────────┤
-    &kp LSHIFT      &ht_left LCMD Z  &ht_left LALT X  &ht_left LSHFT C  &ht_left LCTRL V  &kp B     &kp N  &kp M              &mm_cm_sc          &mm_pr_col        &mm_qm_ex                &kp FSLH
+    &td_lshift_caps &td_z_undo_redo  &td_x_cut        &td_c_copy         &td_v_paste       &td_b_bold &kp N  &kp M              &mm_comma_lt       &td_period_exclamation &mm_qm_slash             &td_minus_emdash_morph
 // ╰───────────────┴────────────────┴────────────────┼─────────────────┼─────────────────┼──────┤  ├──────┼──────────────────┼──────────────────┴─────────────────┴────────────────────────┴─────────────╯
-                                                             &ht_tg_num_nav 2 1  &kp SPACE  &kp BACKSPACE     &kp ENTER      &kp SPACE
+                                                              &ht_tg_num_nav 2 1  &ht_k37_sym_scroll  &kp BACKSPACE     &kp ENTER      &kp SPACE
                                                          // ╰───────────────┴─────────────┴────────────────╯  ╰──────────────┴──────────────╯
                                                          //   Tap: NUM (1)   Hold: NAV (2)    Space           Enter          Space
             >;
@@ -46,20 +46,20 @@
         NUM {
             display-name = "Num";
             bindings = <
-&studio_unlock  &none  &none  &none  &none          &none            &kp PLUS         &mm_f7             &mm_f8             &mm_f9             &mm_f10            &none
-&trans          &none  &none  &none  &kp BACKSPACE  &kp LSHIFT       &kp KP_MINUS     &mm_f4             &mm_f5             &mm_f6             &mm_f11            &none
-&none           &none  &kp X  &none  &none          &none            &kp EQUAL        &mm_f1             &mm_f2             &mm_f3             &mm_f12            &kp KP_SLASH
-                       &to 0  &none          &trans           &kp N0     &kp SPACE
+&studio_unlock  &none  &none  &kp UP           &none          &none            &kp N0             &kp N1             &kp N2             &kp N3             &none              &kp PLUS
+&trans          &none  &none  &kp LEFT_ARROW   &kp DOWN       &kp RIGHT_ARROW  &kp COMMA         &none              &none              &none              &kp N4             &kp N5             &kp N6
+&none           &none  &kp X  &none            &none          &none            &kp KP_MINUS      &kp N8             &kp N8             &kp N9             &none              &none              &none
+                                                              &to 0           &none              &trans             &kp N0             &kp SPACE
             >;
         };
 
         NAV {
             display-name = "Nav";
             bindings = <
-&none    &msc MOVE_LEFT  &msc MOVE_UP    &none              &msc MOVE_DOWN  &msc MOVE_RIGHT     &detach_session  &create_or_attach  &next_pane   &show_sessions  &sync_panes       &none
+&none    &msc MOVE_LEFT  &msc MOVE_UP    &none              &msc MOVE_DOWN  &msc MOVE_RIGHT     &detach_session  &macro_desktop_left &kp UP       &macro_desktop_right &sync_panes       &none
 &kp TAB  &msc MOVE_LEFT  &msc MOVE_DOWN  &msc MOVE_RIGHT    &kp LCTRL       &mkp MB5            &h_split         &kp LEFT_ARROW     &kp DOWN     &kp UP          &kp RIGHT_ARROW   &none
 &none    &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP       &mmv MOVE_RIGHT &none               &v_split         &kp HOME           &kp PG_DN    &kp PG_UP       &kp END           &none
-                                                      &to 0   &trans   &trans                   &none   &trans
+                                                      &to 0   &trans   &trans                   &td_volume_down_mute   &kp C_VOLUME_UP
             >;
         };
 
@@ -76,20 +76,10 @@
         SYM {
             display-name = "Sym";
             bindings = <
-&none  &kp TILDE  &kp DLLR  &kp CARET  &move_line_up    &mc_add_above      &kp AMPS   &kp PLUS     &kp LBKT  &kp RBKT  &kp PRCNT  &kp BSLH
-&none  &kp UNDER  &kp LT    &kp GT     &kp BACKSPACE    &delete_line       &kp GRAVE  &kp KP_MINUS &kp LPAR  &kp RPAR  &kp ASTRK  &kp PIPE
-&none  &home_dir  &none     &kp HASH   &move_line_down  &mc_add_below      &code_blk  &kp EQUAL    &kp LBRC  &kp RBRC  &kp AT     &kp FSLH
+&none  &kp TILDE  &trans    &kp CARET  &move_line_up    &mc_add_above      &kp AMPS   &kp PLUS     &kp LBKT  &kp RBKT  &kp PRCNT  &kp BSLH
+&none  &kp UNDER  &kp LT    &kp GT     &kp BACKSPACE    &delete_line       &kp DLLR   &kp KP_MINUS &kp LPAR  &kp RPAR  &kp ASTRK  &kp PIPE
+&none  &home_dir  &none     &trans     &move_line_down  &mc_add_below      &kp HASH   &kp EQUAL    &kp LBRC  &kp RBRC  &kp AT     &kp FSLH
                                        &to 0  &trans    &trans             &trans     &trans
-            >;
-        };
-
-        GAME {
-            display-name = "Game";
-            bindings = <
-&kp N1  &kp TAB    &kp Q  &kp W   &kp E      &kp R           &none  &none  &none  &none  &none  &trans
-&kp N2  &kp LCTRL  &kp A  &kp S   &kp D      &kp F           &none  &none  &none  &none  &none  &none
-&kp N3  &kp LSHFT  &kp Y  &kp X   &kp C      &kp V           &none  &none  &none  &none  &none  &none
-                          &to 0   &kp SPACE  &kp LEFT_ALT    &none  &none
             >;
         };
 

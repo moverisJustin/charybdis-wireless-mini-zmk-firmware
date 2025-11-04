@@ -230,5 +230,151 @@
                 , <&macro_tap &kp FSLH>
                 ;
         };
+
+        macro_copy: macro_copy { // CMD+C
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp C>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+
+        macro_cut: macro_cut { // CMD+X
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp X>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+
+        macro_paste: macro_paste { // CMD+V
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp V>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+
+        macro_undo: macro_undo { // CMD+Z
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp Z>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+
+        macro_redo: macro_redo { // SHIFT+CMD+Z
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI &kp LSHFT>
+                , <&macro_tap &kp Z>
+                , <&macro_release &kp LGUI &kp LSHFT>
+                ;
+        };
+
+        macro_save: macro_save { // CMD+S
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp S>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+
+        macro_bold: macro_bold { // CMD+B
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp B>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+
+        macro_italics: macro_italics { // CMD+I
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp I>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+
+        macro_underline: macro_underline { // CMD+U
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI>
+                , <&macro_tap &kp U>
+                , <&macro_release &kp LGUI>
+                ;
+        };
+
+        macro_caps_lock: macro_caps_lock { // Caps Lock toggle
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_tap &kp CAPS>
+                ;
+        };
+
+        macro_exclamation: macro_exclamation { // !
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_tap &kp EXCL>
+                ;
+        };
+
+        macro_emdash: macro_emdash { // Em dash (Option+Shift+- on Mac)
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LALT &kp LSHFT>
+                , <&macro_tap &kp MINUS>
+                , <&macro_release &kp LALT &kp LSHFT>
+                ;
+        };
+
+        macro_screenshot: macro_screenshot { // Shift+Cmd+4 (selective screenshot on Mac)
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LGUI &kp LSHFT>
+                , <&macro_tap &kp N4>
+                , <&macro_release &kp LGUI &kp LSHFT>
+                ;
+        };
+
+        macro_desktop_left: macro_desktop_left { // Ctrl+Left Arrow (switch desktop left on Mac)
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL>
+                , <&macro_tap &kp LEFT_ARROW>
+                , <&macro_release &kp LCTRL>
+                ;
+        };
+
+        macro_desktop_right: macro_desktop_right { // Ctrl+Right Arrow (switch desktop right on Mac)
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press &kp LCTRL>
+                , <&macro_tap &kp RIGHT_ARROW>
+                , <&macro_release &kp LCTRL>
+                ;
+        };
     };
 };

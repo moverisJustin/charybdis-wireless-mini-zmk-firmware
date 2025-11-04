@@ -35,39 +35,39 @@ To see all the layers check out the [full render](keymap-drawer/qwerty.svg).
 ⌨️ Keyboard Layers
 | # | Layer      | Purpose                                                          |
 | - | ---------- | ---------------------------------------------------------------- |
-| 0 | **BASE**   | Standard typing with timeless home-row mods                      |
+| 0 | **BASE**   | Standard typing with bottom-row mods (Z, X, C, V)                |
 | 1 | **NUM**    | Combined digits + F-keys (tap for numbers, hold for functions)   |
 | 2 | **NAV**    | Arrow keys, paging, TMUX navigation, mouse pointer               |
-| 3 | **MOUSE**  | Full auto-mouse-key layer (pointer + wheel)                      |
+| 3 | **MOUSE**  | Auto-mouse layer (pointer + clicks) activated by trackball       |
 | 4 | **SYM**    | Symbols, punctuation, and a couple of helpers                    |
-| 5 | **GAME**   | Gaming layer (just key-codes, no mods)                           |
-| 6 | **EXTRAS** | Shortcuts, functions & snippets                                  |
-| 7 | **SLOW**   | Low-speed pointer for pixel-perfect work                         |
+| 5 | **EXTRAS** | Shortcuts, functions & snippets                                  |
+| 6 | **SLOW**   | Low-speed pointer for pixel-perfect work                         |
+| 7 | **RESV**   | Reserved layer (currently unused)                                |
 | 8 | **SCROLL** | Vertical/Horizontal scroll layer                                 |
 
-These are the layers as of 10/31/2025. I do not intend to use this keyboard for gaming, etc. So, I foresee a future where there are far fewer layers with an effort to try to match up to the [Miryoku](https://github.com/manna-harbour/miryoku) schema for layers.
+These are the layers as of the current implementation. I do not intend to use this keyboard for gaming, etc. So, I foresee a future where there are far fewer layers with an effort to try to match up to the [Miryoku](https://github.com/manna-harbour/miryoku) schema for layers.
 
 ⌨️ Keyboard Layer Activation Keys
 | # | Layer      | Purpose                                                 |
 | - | ---------- | ------------------------------------------------------- |
 | 0 | **BASE**   | Standard typing layer. Currently QWERTY.                |
-| 1 | **NUM**    | On press of `K36`                                       |
-| 2 | **NAV**    | On hold of `K36`                                        |
+| 1 | **NUM**    | Tap `K36` (left inner thumb)                            |
+| 2 | **NAV**    | Hold `K36` (left inner thumb)                           |
 | 3 | **MOUSE**  | Automatically activated by trackball movement           |
-| 4 | **SYM**    |                                                         |
-| 5 | **GAME**   |                                                         |
-| 6 | **EXTRAS** | `K38 + K39` (inner most thumb key on each half)         |
-| 7 | **SLOW**   |                                                         |
-| 8 | **SCROLL** | Activated by holding down the K16 currently             |
+| 4 | **SYM**    | Single tap `K11` (P key tap-dance)                      |
+| 5 | **EXTRAS** | Double tap `K11` (P key tap-dance) or `K38 + K39` combo |
+| 6 | **SLOW**   | Currently not activated via key                          |
+| 7 | **RESV**   | Currently not activated via key                          |
+| 8 | **SCROLL** | Hold `K37` (left middle thumb)                           |
 
-🏠 Home-Row Mods (That Aren't Really)
+🏠 Bottom-Row Mods (Not Home-Row Mods)
 
-I don't like home row mods because I just haven't ever really committed to using them. Instead, I use mods on the left side only and on the bottom row (z, x, c). In addition, I put shift in it's normal position on the outside of both sides.
+I don't like home row mods because I just haven't ever really committed to using them. Instead, I use mods on the left side only and on the bottom row (Z, X, C, V). In addition, I put shift in it's normal position on the outside of the left side.
 
 | Side                | Hold = Modifier              | Tap = Letter / Key  |
 | ------------------- | ---------------------------- | ------------------- |
-| Left                | **Command / Option / Control ** | `Z X C`          |
-
+| Left (K25-K28)      | **Command / Option / Shift / Control ** | `Z X C V`          |
+| Left (K24)          | **Left Shift**               | `Left Shift`        |
 
 🔗 Combos
 | Trigger Keys               | Result                                 |
@@ -77,7 +77,17 @@ I don't like home row mods because I just haven't ever really committed to using
 | `K`                        | **Middle Click**                       |
 | `L`                        | **Right Click**                        |
 | `K36`                      | Go back to **BASE** layer from any current layer                 |
-| `K38 + K39` (thumb cluster)| Layer-swap **BASE ⇄ EXTRAS**           |  
+| `K38 + K39` (thumb cluster)| Layer-swap **BASE ⇄ EXTRAS**           |
+
+🔗 Trackball Configuration
+| Setting                    | Value                                        |
+| -------------------------- | -------------------------------------------- |
+| **Auto-Mouse Activation**  | Automatically activates MOUSE layer (3) on trackball movement |
+| **Auto-Mouse Sensitivity** | XY Scaler: `4 4` (lower = less sensitive)    |
+| **Auto-Mouse Timeout**     | 600ms of inactivity returns to BASE          |
+| **Scroll Layer**           | Hold key (K37) activates SCROLL layer (9)  |
+| **Scroll Sensitivity**     | Base `4 4` + Scroll `2 15` scalers           |
+| **Slow Pointer**           | Layer 7 (currently not activated)            |
 
 🔗 Combos I want to add to match what I have used previously
 | Trigger Keys                  | Result                                 |
@@ -147,7 +157,7 @@ I don't like home row mods because I just haven't ever really committed to using
 | `K18`                         | $ |
 | `K30`                         | # |
 
-I might be able to do away with the Extras layer with a few more additions to the Num, Nav, and Sym layers. I will do away with the Game layer regardless as it is not useful for me.
+I might be able to do away with the Extras layer with a few more additions to the Num, Nav, and Sym layers.
 
 ![keymap base](keymap-drawer/qwerty.svg)
 
@@ -173,7 +183,7 @@ I might be able to do away with the Extras layer with a few more additions to th
   - Also need to work on fixing accidental triggers of the auto-mouse layer.
 - **Hold-tap side-aware triggers:** Each HRM key only becomes a modifier if the opposite half is active, preventing accidental holds while one-handed.
 - **Quick-tap / prior-idle:** Tuned for faster mod-vs-tap detection.
-- **ZMK Studio:** Supported on BT builds for quick and easy keymap adjustments. Dongle support will come soon. The -bt build does currently function with Studio, but I want to make it a little easier.
+- **ZMK Studio:** Supported on BT builds for quick and easy keymap adjustments. Dongle support is not currently available. The studio unlock binding is on the NUM layer at K0. Activate NUM layer, then press K0 to unlock Studio editing.
 
 
 ## Customize Keymaps, Layers, & Trackball

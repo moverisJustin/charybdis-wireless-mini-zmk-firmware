@@ -128,7 +128,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <150>;
-            bindings = <&lt 9 ESC>, <&mo 8>; // hold, tap, double_tap
+            bindings = <&lt 8 ESC>, <&mo 6>; // hold = SCROLL (8), tap = ESC, double = SLOW (6)
         };
 
         lt_nav: nav_layer_tap {
@@ -159,7 +159,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <170>;
-            bindings = <&mo_clk 5 LCLK>, <&mkp LCLK>; // hold, tap, double_tap
+            bindings = <&mo_clk 3 LCLK>, <&mkp LCLK>; // hold = MOUSE layer (3) + click, tap = click, double_tap = click
         };
 
         mo_kp: mo_kp {
@@ -243,6 +243,153 @@
             #binding-cells = <0>;
             bindings      = <&kp COMMA>, <&kp SEMICOLON>;
             mods          = <(MOD_LSFT | MOD_RSFT)>;
+        };
+
+        // New mod-morph behaviors for BASE layer changes
+        mm_eq_plus: equals_plus {
+            compatible    = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings      = <&kp EQUAL>, <&kp PLUS>;
+            mods          = <(MOD_LSFT | MOD_RSFT)>;
+        };
+
+        mm_comma_lt: comma_less_than {
+            compatible    = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings      = <&kp COMMA>, <&kp LT>;
+            mods          = <(MOD_LSFT | MOD_RSFT)>;
+        };
+
+        mm_period_gt: period_greater_than {
+            compatible    = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings      = <&kp PERIOD>, <&kp GT>;
+            mods          = <(MOD_LSFT | MOD_RSFT)>;
+        };
+
+        mm_qm_slash: question_slash {
+            compatible    = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings      = <&kp QUESTION>, <&kp FSLH>;
+            mods          = <(MOD_LSFT | MOD_RSFT)>;
+        };
+
+        mm_minus_under: minus_underscore {
+            compatible    = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings      = <&kp MINUS>, <&kp UNDER>;
+            mods          = <(MOD_LSFT | MOD_RSFT)>;
+        };
+
+        // Tap-dance for minus with em dash (double tap)
+        td_minus_emdash_morph: td_minus_emdash_morph {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&mm_minus_under>, <&macro_emdash>; // tap = minus/underscore (with shift), double = em dash
+        };
+
+        // Hold-tap for K37: Sym on tap, Scroll on hold
+        ht_k37_sym_scroll: ht_k37_sym_scroll {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <0>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            bindings = <&mo 8>, <&to 4>; // hold = SCROLL (8), tap = SYM (4)
+        };
+
+        // Double-tap shortcuts for Z, X, C, V (preserving hold-tap modifier functionality)
+        td_z_undo_redo: td_z_undo_redo {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&ht_left LCMD Z>, <&macro_undo>, <&macro_redo>; // tap = Z (hold for CMD), double = undo, triple = redo
+        };
+
+        td_x_cut: td_x_cut {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&ht_left LALT X>, <&macro_cut>; // tap = X (hold for ALT), double = cut
+        };
+
+        td_c_copy: td_c_copy {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&ht_left LSHFT C>, <&macro_copy>; // tap = C (hold for SHIFT), double = copy
+        };
+
+        td_v_paste: td_v_paste {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&ht_left LCTRL V>, <&macro_paste>; // tap = V (hold for CTRL), double = paste
+        };
+
+        // Double-tap shortcuts for other keys
+        td_s_save: td_s_save {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp S>, <&macro_save>; // tap = S, double = save
+        };
+
+        td_b_bold: td_b_bold {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp B>, <&macro_bold>; // tap = B, double = bold
+        };
+
+        td_i_italics: td_i_italics {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp I>, <&macro_italics>; // tap = I, double = italics
+        };
+
+        td_o_underline: td_o_underline {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp O>, <&macro_underline>; // tap = O, double = underline
+        };
+
+        td_lshift_caps: td_lshift_caps {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp LSHIFT>, <&macro_caps_lock>; // tap = LSHIFT, double = caps lock
+        };
+
+        td_period_exclamation: td_period_exclamation {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&mm_period_gt>, <&macro_exclamation>; // tap = period/greater-than (with shift), double = exclamation
+        };
+
+        td_minus_emdash: td_minus_emdash {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp MINUS>, <&macro_emdash>; // tap = minus, double = em dash
+        };
+
+        td_volume_down_mute: td_volume_down_mute {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp C_VOLUME_DOWN>, <&kp K_MUTE>; // tap = volume down, double = mute/unmute
+        };
+
+        td_kp_minus_emdash: td_kp_minus_emdash {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp KP_MINUS>, <&macro_emdash>; // tap = keypad minus, double = em dash
         };
     };
 };

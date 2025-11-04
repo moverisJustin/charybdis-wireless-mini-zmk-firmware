@@ -27,7 +27,6 @@
 // #define NUM     1
 // #define NAV     2
 // #define SYM     3
-// #define GAME    4
 // #define EXTRAS  5
 // #define SLOW    6
 // #define SCROLL  7
@@ -72,15 +71,6 @@
 &none      &none     &kp LPAR  &kp RPAR  &kp BACKSPACE   &kp UNDER     &kp KP_MINUS &kp GRAVE &kp LBRC  &kp RBRC  &kp ASTRK  &kp PIPE
 &none      &none     &none     &kp HASH  &home_dir       &kp DLLR      &kp EQUAL    &code_blk &kp LT    &kp GT    &kp AT     &kp KP_SLASH
                                        &none  &trans     &trans         &trans   &trans
-            >;
-        };
-
-        GAME {
-            bindings = <
-&kp N1  &kp TAB    &kp Q  &kp W   &kp E      &kp R           &none  &none  &none  &none  &none  &trans
-&kp N2  &kp LCTRL  &kp A  &kp S   &kp D      &kp F           &none  &none  &none  &none  &none  &none
-&kp N3  &kp LSHFT  &kp Y  &kp X   &kp C      &kp V           &none  &none  &none  &none  &none  &none
-                          &none   &kp SPACE  &kp LEFT_ALT    &none  &none
             >;
         };
 
