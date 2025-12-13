@@ -99,7 +99,7 @@ jobs:
         mkdir -p zmk/app/overlays
 
         # Only for bt/dongle builds, copy in the single keymap and any helpers
-        if [[ "${{ matrix.combo.format }}" != "reset" ]]; then
+        if [[ "${{ matrix.combo.format }}" != "reset" && "${{ matrix.combo.format }}" != "reset-xiao" ]]; then
           cp config/keymap/${{ matrix.combo.keymap }}.keymap \
              zmk/app/overlays/charybdis.keymap
 
@@ -110,12 +110,20 @@ jobs:
 
     # ───────── Inject custom shields & helper DTSI files ─────────
     - name: Inject custom shields & helper files
-      if: ${{ matrix.combo.format != 'reset' }}
+      if: ${{ matrix.combo.format != 'reset' && matrix.combo.format != 'reset-xiao' }}
       shell: bash
       run: |
         ZMK_SHIELDS_DIR="$GITHUB_WORKSPACE/zmk/app/boards/shields"
         mkdir -p "$ZMK_SHIELDS_DIR"
-        cp -r "boards/shields/charybdis_${{ matrix.combo.format }}" "$ZMK_SHIELDS_DIR/"
+        
+        # Determine which shield directory to copy based on format
+        if [[ "${{ matrix.combo.format }}" == "dongle-xiao" ]]; then
+          SHIELD_DIR="charybdis_dongle"
+        else
+          SHIELD_DIR="charybdis_${{ matrix.combo.format }}"
+        fi
+        
+        cp -r "boards/shields/$SHIELD_DIR" "$ZMK_SHIELDS_DIR/"
         for d in "$ZMK_SHIELDS_DIR"/*; do
           for f in charybdis-layouts.dtsi charybdis_pmw3610.dtsi charybdis_pointer.dtsi; do
             [ -f "config/$f" ] && cp "config/$f" "$d/" || true
@@ -130,68 +138,92 @@ jobs:
         set -euo pipefail
 
         KM="${{ matrix.combo.keymap }}"
-        FM="${{ matrix.combo.format }}"   # bt | dongle | reset
+        FM="${{ matrix.combo.format }}"   # bt | dongle | dongle-xiao | reset | reset-xiao
         NM="${{ matrix.combo.name }}"
-        BD="${{ matrix.combo.board }}"    # nice_nano_v2
+        BD="${{ matrix.combo.board }}"    # nice_nano_v2 | seeeduino_xiao_ble
 
         declare -A LIST=(
           [bt]="charybdis_left charybdis_right"
-          [dongle]="charybdis_left charybdis_right charybdis_dongle"
+          [dongle]="charybdis_left charybdis_right"
+          [dongle-xiao]="charybdis_dongle prospector_adapter"
           [reset]="settings_reset"
+          [reset-xiao]="settings_reset"
         )
 
         mkdir -p "$GITHUB_WORKSPACE/out/$NM"
         CONFIG_DIR="$GITHUB_WORKSPACE/config"
         
         # ──────────────────────────────────────────────────────────────
-
-        for SH in ${LIST[$FM]}; do
+        
+        # Handle dongle-xiao format specially (single shield with adapter)
+        if [[ "$FM" == "dongle-xiao" ]]; then
+          SH="${LIST[$FM]}"
           BUILD_DIR=$(mktemp -d)
-
-          # studio RPC only on right half of BT builds
-          if [[ "$FM" == "bt" && "$SH" == *right ]]; then
-            SNIPPET_OPTION="-DSNIPPET=studio-rpc-usb-uart"
-          else
-            SNIPPET_OPTION=""
-          fi
-
-          # set keymap
-          if [[ "$FM" != "reset" ]]; then
-            KEYMAP_OPTION="-DKEYMAP_FILE=overlays/charybdis.keymap"
-          else
-            KEYMAP_OPTION=""
-          fi
-
-          # ───────── DEBUG LOGS ─────────
-          echo "🪳 Debug Logs"
-          echo "Build Variables:"
-          echo "→ Keymap       (KM): $KM"
-          echo "→ Format       (FM): $FM"
-          echo "→ Name         (NM): $NM"
-          echo "→ Board        (BD): $BD"
-          echo "→ Current directory: $(pwd)"
-          echo "→ KEYMAP_OPTION    :$KEYMAP_OPTION"
-          echo "→ SNIPPET_OPTION   :$SNIPPET_OPTION"
-          echo "→ Build dir        : $BUILD_DIR"
-          # echo "→ Directory contents:"
-          # tree .
-          # echo "📍 Showing current build directory and listing contents:"
-          # echo "GITHUB_WORKSPACE:"
-          # tree $GITHUB_WORKSPACE
-
-          echo "🛠 Kicking off the firmware build..."
+          
+          KEYMAP_OPTION="-DKEYMAP_FILE=overlays/charybdis.keymap"
+          SNIPPET_OPTION=""
+          
+          echo "🛠 Building dongle with prospector adapter..."
           west build -p \
             -d "$BUILD_DIR" \
             -b "$BD" \
             -- \
             "-DZMK_CONFIG=$CONFIG_DIR" \
             "-DSHIELD=$SH" \
-            "$KEYMAP_OPTION" \
-            "$SNIPPET_OPTION"
-
+            "$KEYMAP_OPTION"
+          
           ART=$(if [[ -f "$BUILD_DIR/zephyr/zmk.uf2" ]]; then echo zmk.uf2; else echo zmk.bin; fi)
-          cp "$BUILD_DIR/zephyr/$ART" "$GITHUB_WORKSPACE/out/$NM/$SH.${ART##*.}"
-        done
+          cp "$BUILD_DIR/zephyr/$ART" "$GITHUB_WORKSPACE/out/$NM/charybdis_dongle.${ART##*.}"
+        else
+          # Regular multi-shield builds
+          for SH in ${LIST[$FM]}; do
+            BUILD_DIR=$(mktemp -d)
+
+            # studio RPC only on right half of BT builds
+            if [[ "$FM" == "bt" && "$SH" == *right ]]; then
+              SNIPPET_OPTION="-DSNIPPET=studio-rpc-usb-uart"
+            else
+              SNIPPET_OPTION=""
+            fi
+
+            # set keymap
+            if [[ "$FM" != "reset" && "$FM" != "reset-xiao" ]]; then
+              KEYMAP_OPTION="-DKEYMAP_FILE=overlays/charybdis.keymap"
+            else
+              KEYMAP_OPTION=""
+            fi
+
+            # ───────── DEBUG LOGS ─────────
+            echo "🪳 Debug Logs"
+            echo "Build Variables:"
+            echo "→ Keymap       (KM): $KM"
+            echo "→ Format       (FM): $FM"
+            echo "→ Name         (NM): $NM"
+            echo "→ Board        (BD): $BD"
+            echo "→ Current directory: $(pwd)"
+            echo "→ KEYMAP_OPTION    :$KEYMAP_OPTION"
+            echo "→ SNIPPET_OPTION   :$SNIPPET_OPTION"
+            echo "→ Build dir        : $BUILD_DIR"
+            # echo "→ Directory contents:"
+            # tree .
+            # echo "📍 Showing current build directory and listing contents:"
+            # echo "GITHUB_WORKSPACE:"
+            # tree $GITHUB_WORKSPACE
+
+            echo "🛠 Kicking off the firmware build..."
+            west build -p \
+              -d "$BUILD_DIR" \
+              -b "$BD" \
+              -- \
+              "-DZMK_CONFIG=$CONFIG_DIR" \
+              "-DSHIELD=$SH" \
+              "$KEYMAP_OPTION" \
+              "$SNIPPET_OPTION"
+
+            ART=$(if [[ -f "$BUILD_DIR/zephyr/zmk.uf2" ]]; then echo zmk.uf2; else echo zmk.bin; fi)
+            cp "$BUILD_DIR/zephyr/$ART" "$GITHUB_WORKSPACE/out/$NM/$SH.${ART##*.}"
+          done
+        fi
 
     - name: Upload firmware bundle
       uses: actions/upload-artifact@v4
