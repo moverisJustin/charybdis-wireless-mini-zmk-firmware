@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 # === CONFIGURATION ===
-board_nice_nano = "nice_nano"
+board_nice_nano = "nice_nano_v2"
 board_xiao = "seeeduino_xiao_ble"
 # automatically find all *.keymap filenames under ../config/keymap
 keymap_dir = Path(__file__).parent.parent / "config" / "keymap"
