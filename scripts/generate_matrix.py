@@ -3,7 +3,7 @@ from pathlib import Path
 
 # === CONFIGURATION ===
 board_nice_nano = "nice_nano"
-board_xiao = "xiao_ble"
+board_xiao = "seeeduino_xiao_ble"
 # automatically find all *.keymap filenames under ../config/keymap
 keymap_dir = Path(__file__).parent.parent / "config" / "keymap"
 keymaps = sorted(p.stem for p in keymap_dir.glob("*.keymap"))
