@@ -82,9 +82,16 @@ jobs:
           rm -rf "$GITHUB_WORKSPACE/prospector-zmk-module/zephyr" 2>/dev/null || true
         fi
         
-        # Remove zmk-pmw3610-driver bindings for dongle-xiao builds to avoid conflict with built-in Zephyr driver
+        # Remove Zephyr's built-in PMW3610 driver bindings for non-dongle-xiao builds to avoid conflict with zmk-pmw3610-driver
+        # (dongle-xiao builds don't use PMW3610, so they don't need this)
+        if [[ "${{ matrix.combo.format }}" != "dongle-xiao" ]]; then
+          echo "🗑️ Removing Zephyr built-in PMW3610 bindings to avoid conflict with zmk-pmw3610-driver"
+          rm -f "$GITHUB_WORKSPACE/zephyr/dts/bindings/input/pixart,pmw3610.yaml" 2>/dev/null || true
+        fi
+        
+        # Remove zmk-pmw3610-driver bindings for dongle-xiao builds (they don't have physical trackballs)
         if [[ "${{ matrix.combo.format }}" == "dongle-xiao" ]]; then
-          echo "🗑️ Removing zmk-pmw3610-driver bindings to avoid conflict with built-in Zephyr 4.1.0 driver"
+          echo "🗑️ Removing zmk-pmw3610-driver bindings (dongle has no physical trackball)"
           rm -rf "$GITHUB_WORKSPACE/zmk-pmw3610-driver/dts" 2>/dev/null || true
         fi
         
