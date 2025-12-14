@@ -80,6 +80,10 @@ jobs:
         echo "🗑️ Removing prospector module zephyr directory to avoid module processing errors"
         rm -rf "$GITHUB_WORKSPACE/prospector-zmk-module/zephyr" 2>/dev/null || true
         
+        # Remove Zephyr's built-in PMW3610 driver bindings to avoid conflict with zmk-pmw3610-driver
+        echo "🗑️ Removing Zephyr built-in PMW3610 bindings to avoid conflict with zmk-pmw3610-driver"
+        rm -f "$GITHUB_WORKSPACE/zephyr/dts/bindings/input/pixart,pmw3610.yaml" 2>/dev/null || true
+        
         echo "📦 Exporting Zephyr for external build system integration."
         west zephyr-export
 
