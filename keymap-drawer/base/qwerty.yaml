@@ -28,8 +28,8 @@ layers:
   - '&td_lshift_caps'
   - {t: Z, h: LCMD}
   - {t: X, h: LALT}
-  - {t: C, h: LSHFT}
-  - {t: V, h: LCTRL}
+  - {t: C, h: LCTRL}
+  - V
   - B
   - N
   - M
