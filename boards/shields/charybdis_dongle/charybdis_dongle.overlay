@@ -1,11 +1,15 @@
 // Documentation: https://zmk.dev/docs/development/hardware-integration/dongle
 #include <dt-bindings/zmk/matrix_transform.h>
 #include "charybdis-layouts.dtsi"
-#include "split_input_common.dtsi"
+#include "charybdis_pmw3610.dtsi"
 #include "charybdis_pointer.dtsi"
 
 &charybdis_physical_layout {
     transform = <&default_transform>;
+};
+
+&trackball_split {
+  status = "okay";
 };
 
 /* enable the listener on central */
@@ -17,6 +21,7 @@
     chosen {
         zmk,kscan           = &kscan0;
         zmk,physical-layout = &charybdis_physical_layout;
+        zmk,input-device    = &trackball_split;
     };
 
     kscan0: kscan_1 {
