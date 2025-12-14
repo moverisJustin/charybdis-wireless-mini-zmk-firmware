@@ -42,6 +42,21 @@
          low-power-enable;
       };
    };
+
+   i2c0_default: i2c0_default {
+      group1 {
+         psels = <NRF_PSEL(TWIM_SDA, 0, 6)>,
+                 <NRF_PSEL(TWIM_SCL, 0, 8)>;
+      };
+   };
+
+   i2c0_sleep: i2c0_sleep {
+      group1 {
+         psels = <NRF_PSEL(TWIM_SDA, 0, 6)>,
+                 <NRF_PSEL(TWIM_SCL, 0, 8)>;
+         low-power-enable;
+      };
+   };
 };
 
 disp_spi: &spi3 {
@@ -81,6 +96,9 @@ disp_spi: &spi3 {
 
 &i2c0 {
    status = "okay";
+   pinctrl-0 = <&i2c0_default>;
+   pinctrl-1 = <&i2c0_sleep>;
+   pinctrl-names = "default", "sleep";
 
    apds9960: apds9960@39 {
        compatible = "avago,apds9960";
