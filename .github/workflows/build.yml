@@ -97,61 +97,8 @@ jobs:
             awk '/^config LV_DISP_DEF_REFR_PERIOD$/ { print; print "    int"; next } 1' "$PROSPECTOR_KCONFIG" > "${PROSPECTOR_KCONFIG}.tmp" && mv "${PROSPECTOR_KCONFIG}.tmp" "$PROSPECTOR_KCONFIG"
           fi
           
-          # Fix LVGL API compatibility issues in prospector module source files
-          echo "🔧 Fixing LVGL API compatibility issues"
-          
-          # Fix layer_roller.c - disable mask fade code that's incompatible with LVGL v9
-          LAYER_ROLLER="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/layer_roller.c"
-          if [ -f "$LAYER_ROLLER" ]; then
-            echo "🔧 Disabling incompatible mask fade code in layer_roller.c for LVGL v9"
-            python3 << EOF
-import sys
-file_path = "$LAYER_ROLLER"
-with open(file_path, 'r') as f:
-    lines = f.readlines()
-
-result = []
-i = 0
-while i < len(lines):
-    line = lines[i]
-    # Find the mask_event_cb function
-    if 'static void mask_event_cb' in line:
-        # Keep function signature
-        result.append(line)
-        i += 1
-        # Skip opening brace
-        if i < len(lines):
-            result.append(lines[i])
-            i += 1
-        # Add early return and comment out rest
-        result.append('    // LVGL v9 compatibility: mask fade functionality disabled\n')
-        result.append('    return;\n')
-        # Skip until closing brace (handle nested braces)
-        brace_count = 1
-        while i < len(lines) and brace_count > 0:
-            for char in lines[i]:
-                if char == '{':
-                    brace_count += 1
-                elif char == '}':
-                    brace_count -= 1
-            if brace_count == 0:
-                result.append(lines[i])
-            i += 1
-    else:
-        result.append(line)
-        i += 1
-
-with open(file_path, 'w') as f:
-    f.writelines(result)
-EOF
-          fi
-          
-          # Fix battery_bar.c - remove or comment out deprecated lv_obj_set_style_bg_dither_mode call
-          BATTERY_BAR="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/battery_bar.c"
-          if [ -f "$BATTERY_BAR" ]; then
-            sed -i.bak 's/.*lv_obj_set_style_bg_dither_mode.*/\/\/ Removed: lv_obj_set_style_bg_dither_mode - deprecated in LVGL v9/' "$BATTERY_BAR"
-            rm -f "${BATTERY_BAR}.bak" 2>/dev/null || true
-          fi
+          # Note: LVGL v9 API compatibility fixes removed temporarily
+          # The prospector module may need updates for full LVGL v9 compatibility
         fi
         
         echo "📦 Exporting Zephyr for external build system integration."
