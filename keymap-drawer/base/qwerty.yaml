@@ -26,7 +26,7 @@ layers:
   - ;
   - ''''
   - '&td_lshift_caps'
-  - '&td_z_undo_redo'
+  - {t: Z, h: LCMD}
   - {t: X, h: LALT}
   - {t: C, h: LSHFT}
   - {t: V, h: LCTRL}
