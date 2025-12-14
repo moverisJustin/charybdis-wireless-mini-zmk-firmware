@@ -8,6 +8,12 @@
     transform = <&default_transform>;
 };
 
+/* Disable the trackball device on the dongle - it doesn't have a physical trackball,
+   it only receives trackball data via BLE from the peripherals */
+&trackball {
+  status = "disabled";
+};
+
 &trackball_split {
   status = "okay";
 };
