@@ -100,19 +100,41 @@ jobs:
           # Fix LVGL API compatibility issues in prospector module source files for LVGL v9
           echo "🔧 Fixing LVGL API compatibility issues"
           
-          # Fix layer_roller.c - replace old LVGL v8 API with v9 equivalent
+          # Fix layer_roller.c - disable mask fade functionality (LVGL v9 API incompatible)
           LAYER_ROLLER="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/layer_roller.c"
           if [ -f "$LAYER_ROLLER" ]; then
-            echo "🔧 Fixing layer_roller.c for LVGL v9"
-            sed -i.bak 's/lv_draw_mask_fade_param_t/lv_draw_sw_mask_fade_param_t/g' "$LAYER_ROLLER"
-            rm -f "${LAYER_ROLLER}.bak" 2>/dev/null || true
+            echo "🔧 Disabling mask fade in layer_roller.c for LVGL v9 compatibility"
+            # Replace mask_event_cb function body with early return
+            awk '
+              BEGIN { in_func = 0; brace_count = 0 }
+              /static void mask_event_cb/ { 
+                in_func = 1
+                print
+                getline
+                if (/^{/) {
+                  print
+                  print "    // LVGL v9 compatibility: mask fade disabled"
+                  print "    return;"
+                  brace_count = 1
+                  while (getline && brace_count > 0) {
+                    if (/^{/) brace_count++
+                    if (/^}/) brace_count--
+                    if (brace_count == 0) print
+                  }
+                  in_func = 0
+                  next
+                }
+              }
+              { print }
+            ' "$LAYER_ROLLER" > "${LAYER_ROLLER}.tmp" && mv "${LAYER_ROLLER}.tmp" "$LAYER_ROLLER"
           fi
           
           # Fix battery_bar.c - comment out deprecated function
           BATTERY_BAR="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/battery_bar.c"
           if [ -f "$BATTERY_BAR" ]; then
             echo "🔧 Fixing battery_bar.c for LVGL v9"
-            sed -i.bak 's/.*lv_obj_set_style_bg_dither_mode.*/\/\/ Removed: lv_obj_set_style_bg_dither_mode - deprecated in LVGL v9/' "$BATTERY_BAR"
+            # Comment out the entire line with the deprecated function
+            sed -i.bak 's/^\(.*lv_obj_set_style_bg_dither_mode.*\)$/\/\/ LVGL v9: \1/' "$BATTERY_BAR"
             rm -f "${BATTERY_BAR}.bak" 2>/dev/null || true
           fi
         fi
