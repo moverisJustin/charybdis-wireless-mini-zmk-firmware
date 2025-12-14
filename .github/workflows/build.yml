@@ -138,6 +138,19 @@ jobs:
           done
         done
 
+    # ───────── Inject board extensions ─────────
+    - name: Inject board extensions
+      if: ${{ matrix.combo.board == 'xiao_ble' }}
+      shell: bash
+      run: |
+        ZMK_EXTENSIONS_DIR="$GITHUB_WORKSPACE/zmk/app/boards/extensions"
+        mkdir -p "$ZMK_EXTENSIONS_DIR"
+        
+        # Copy board extension overlays if they exist
+        if [ -d "boards/extensions" ]; then
+          cp -r boards/extensions/* "$ZMK_EXTENSIONS_DIR/" || true
+        fi
+
     # ───────── Build ─────────
     - name: Build combo ${{ matrix.combo.name }}
       shell: bash
