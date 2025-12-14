@@ -70,20 +70,10 @@ jobs:
       shell: bash
       run: |
         set -euxo pipefail
-        
         echo "✨ Initializing the west workspace with the local manifest from config/west.yml."
         west init -l --mf $GITHUB_WORKSPACE/config/west.yml "$GITHUB_WORKSPACE/config"
         echo "🔄 Updating and synchronizing all repositories in the workspace."
         west update
-        
-        # Remove prospector module zephyr directory for non-prospector builds to avoid Kconfig errors
-        echo "🗑️ Removing prospector module zephyr directory to avoid module processing errors"
-        rm -rf "$GITHUB_WORKSPACE/prospector-zmk-module/zephyr" 2>/dev/null || true
-        
-        # Remove Zephyr's built-in PMW3610 driver bindings to avoid conflict with zmk-pmw3610-driver
-        echo "🗑️ Removing Zephyr built-in PMW3610 bindings to avoid conflict with zmk-pmw3610-driver"
-        rm -f "$GITHUB_WORKSPACE/zephyr/dts/bindings/input/pixart,pmw3610.yaml" 2>/dev/null || true
-        
         echo "📦 Exporting Zephyr for external build system integration."
         west zephyr-export
 
@@ -142,7 +132,7 @@ jobs:
         KM="${{ matrix.combo.keymap }}"
         FM="${{ matrix.combo.format }}"   # bt | dongle | reset
         NM="${{ matrix.combo.name }}"
-        BD="${{ matrix.combo.board }}"    # nice_nano
+        BD="${{ matrix.combo.board }}"    # nice_nano_v2
 
         declare -A LIST=(
           [bt]="charybdis_left charybdis_right"
