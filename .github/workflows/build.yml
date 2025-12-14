@@ -76,35 +76,35 @@ jobs:
         echo "🔄 Updating and synchronizing all repositories in the workspace."
         west update
         
-                    # Remove prospector module zephyr directory for non-prospector builds to avoid module processing errors
-                    if [[ "${{ matrix.combo.format }}" != "dongle-xiao" ]]; then
-                      echo "🗑️ Removing prospector module zephyr directory to avoid module processing errors"
-                      rm -rf "$GITHUB_WORKSPACE/prospector-zmk-module/zephyr" 2>/dev/null || true
-                    fi
-                    
-                    # Remove zmk-pmw3610-driver bindings for dongle-xiao builds to avoid conflict with built-in Zephyr driver
-                    if [[ "${{ matrix.combo.format }}" == "dongle-xiao" ]]; then
-                      echo "🗑️ Removing zmk-pmw3610-driver bindings to avoid conflict with built-in Zephyr 4.1.0 driver"
-                      rm -rf "$GITHUB_WORKSPACE/zmk-pmw3610-driver/dts" 2>/dev/null || true
-                    fi
-                    
-                    # Fix prospector module Kconfig for dongle-xiao builds - add missing type to LV_DISP_DEF_REFR_PERIOD
-                    if [[ "${{ matrix.combo.format }}" == "dongle-xiao" ]]; then
-                      PROSPECTOR_KCONFIG="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/Kconfig.defconfig"
-                      if [ -f "$PROSPECTOR_KCONFIG" ]; then
-                        echo "🔧 Fixing LV_DISP_DEF_REFR_PERIOD Kconfig option (adding missing int type)"
-                        # Use awk to add 'int' type line after the config line
-                        awk '/^config LV_DISP_DEF_REFR_PERIOD$/ { print; print "    int"; next } 1' "$PROSPECTOR_KCONFIG" > "${PROSPECTOR_KCONFIG}.tmp" && mv "${PROSPECTOR_KCONFIG}.tmp" "$PROSPECTOR_KCONFIG"
-                      fi
-                      
-                      # Fix LVGL API compatibility issues in prospector module source files
-                      echo "🔧 Fixing LVGL API compatibility issues"
-                      
-                      # Fix layer_roller.c - disable mask fade code that's incompatible with LVGL v9
-                      LAYER_ROLLER="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/layer_roller.c"
-                      if [ -f "$LAYER_ROLLER" ]; then
-                        echo "🔧 Disabling incompatible mask fade code in layer_roller.c for LVGL v9"
-                        python3 << EOF
+        # Remove prospector module zephyr directory for non-prospector builds to avoid module processing errors
+        if [[ "${{ matrix.combo.format }}" != "dongle-xiao" ]]; then
+          echo "🗑️ Removing prospector module zephyr directory to avoid module processing errors"
+          rm -rf "$GITHUB_WORKSPACE/prospector-zmk-module/zephyr" 2>/dev/null || true
+        fi
+        
+        # Remove zmk-pmw3610-driver bindings for dongle-xiao builds to avoid conflict with built-in Zephyr driver
+        if [[ "${{ matrix.combo.format }}" == "dongle-xiao" ]]; then
+          echo "🗑️ Removing zmk-pmw3610-driver bindings to avoid conflict with built-in Zephyr 4.1.0 driver"
+          rm -rf "$GITHUB_WORKSPACE/zmk-pmw3610-driver/dts" 2>/dev/null || true
+        fi
+        
+        # Fix prospector module Kconfig for dongle-xiao builds - add missing type to LV_DISP_DEF_REFR_PERIOD
+        if [[ "${{ matrix.combo.format }}" == "dongle-xiao" ]]; then
+          PROSPECTOR_KCONFIG="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/Kconfig.defconfig"
+          if [ -f "$PROSPECTOR_KCONFIG" ]; then
+            echo "🔧 Fixing LV_DISP_DEF_REFR_PERIOD Kconfig option (adding missing int type)"
+            # Use awk to add 'int' type line after the config line
+            awk '/^config LV_DISP_DEF_REFR_PERIOD$/ { print; print "    int"; next } 1' "$PROSPECTOR_KCONFIG" > "${PROSPECTOR_KCONFIG}.tmp" && mv "${PROSPECTOR_KCONFIG}.tmp" "$PROSPECTOR_KCONFIG"
+          fi
+          
+          # Fix LVGL API compatibility issues in prospector module source files
+          echo "🔧 Fixing LVGL API compatibility issues"
+          
+          # Fix layer_roller.c - disable mask fade code that's incompatible with LVGL v9
+          LAYER_ROLLER="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/layer_roller.c"
+          if [ -f "$LAYER_ROLLER" ]; then
+            echo "🔧 Disabling incompatible mask fade code in layer_roller.c for LVGL v9"
+            python3 << EOF
 import sys
 file_path = "$LAYER_ROLLER"
 with open(file_path, 'r') as f:
@@ -144,15 +144,15 @@ while i < len(lines):
 with open(file_path, 'w') as f:
     f.writelines(result)
 EOF
-                      fi
-                      
-                      # Fix battery_bar.c - remove or comment out deprecated lv_obj_set_style_bg_dither_mode call
-                      BATTERY_BAR="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/battery_bar.c"
-                      if [ -f "$BATTERY_BAR" ]; then
-                        sed -i.bak 's/.*lv_obj_set_style_bg_dither_mode.*/\/\/ Removed: lv_obj_set_style_bg_dither_mode - deprecated in LVGL v9/' "$BATTERY_BAR"
-                        rm -f "${BATTERY_BAR}.bak" 2>/dev/null || true
-                      fi
-                    fi
+          fi
+          
+          # Fix battery_bar.c - remove or comment out deprecated lv_obj_set_style_bg_dither_mode call
+          BATTERY_BAR="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/battery_bar.c"
+          if [ -f "$BATTERY_BAR" ]; then
+            sed -i.bak 's/.*lv_obj_set_style_bg_dither_mode.*/\/\/ Removed: lv_obj_set_style_bg_dither_mode - deprecated in LVGL v9/' "$BATTERY_BAR"
+            rm -f "${BATTERY_BAR}.bak" 2>/dev/null || true
+          fi
+        fi
         
         echo "📦 Exporting Zephyr for external build system integration."
         west zephyr-export
