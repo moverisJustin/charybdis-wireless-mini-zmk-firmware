@@ -75,6 +75,11 @@ jobs:
         west init -l --mf $GITHUB_WORKSPACE/config/west.yml "$GITHUB_WORKSPACE/config"
         echo "🔄 Updating and synchronizing all repositories in the workspace."
         west update
+        
+        # Remove prospector module zephyr directory for non-prospector builds to avoid Kconfig errors
+        echo "🗑️ Removing prospector module zephyr directory to avoid module processing errors"
+        rm -rf "$GITHUB_WORKSPACE/prospector-zmk-module/zephyr" 2>/dev/null || true
+        
         echo "📦 Exporting Zephyr for external build system integration."
         west zephyr-export
 
