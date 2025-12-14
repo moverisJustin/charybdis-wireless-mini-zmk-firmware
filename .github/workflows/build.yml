@@ -96,6 +96,23 @@ jobs:
                         # Use awk to add 'int' type line after the config line
                         awk '/^config LV_DISP_DEF_REFR_PERIOD$/ { print; print "    int"; next } 1' "$PROSPECTOR_KCONFIG" > "${PROSPECTOR_KCONFIG}.tmp" && mv "${PROSPECTOR_KCONFIG}.tmp" "$PROSPECTOR_KCONFIG"
                       fi
+                      
+                      # Fix LVGL API compatibility issues in prospector module source files
+                      echo "🔧 Fixing LVGL API compatibility issues"
+                      
+                      # Fix layer_roller.c - change lv_draw_mask_fade_param_t to lv_draw_sw_mask_fade_param_t
+                      LAYER_ROLLER="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/layer_roller.c"
+                      if [ -f "$LAYER_ROLLER" ]; then
+                        sed -i.bak 's/lv_draw_mask_fade_param_t/lv_draw_sw_mask_fade_param_t/g' "$LAYER_ROLLER"
+                        rm -f "${LAYER_ROLLER}.bak" 2>/dev/null || true
+                      fi
+                      
+                      # Fix battery_bar.c - remove or comment out deprecated lv_obj_set_style_bg_dither_mode call
+                      BATTERY_BAR="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/src/widgets/battery_bar.c"
+                      if [ -f "$BATTERY_BAR" ]; then
+                        sed -i.bak 's/.*lv_obj_set_style_bg_dither_mode.*/\/\/ Removed: lv_obj_set_style_bg_dither_mode - deprecated in LVGL v9/' "$BATTERY_BAR"
+                        rm -f "${BATTERY_BAR}.bak" 2>/dev/null || true
+                      fi
                     fi
         
         echo "📦 Exporting Zephyr for external build system integration."
