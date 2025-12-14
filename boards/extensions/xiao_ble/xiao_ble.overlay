@@ -61,7 +61,6 @@
 
 &spi3 {
    status = "okay";
-   compatible = "nordic,nrf-spim";
    #address-cells = <1>;
    #size-cells = <0>;
    pinctrl-0 = <&spi3_default>;
