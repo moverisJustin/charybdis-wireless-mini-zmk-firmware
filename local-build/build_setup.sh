@@ -37,7 +37,7 @@ west zephyr-export
 
 # Set permissions so users can delete them
 echo "🛠️  Setting permissions on ZMK resources:"
-chmod -R 777 .west zmk zephyr modules zmk-pmw3610-driver
+chmod -R 777 .west zmk zephyr modules
 
 # # Optional: confirm checkout
 # echo "🛠️  West workspace ready. Project structure:"
@@ -126,8 +126,8 @@ for shield in "${shields[@]}"; do
   setup_sandbox "$shield"
   cd "$BUILD_REPO/zmk"
 
-  # Load in modules (e.g. PMW3610 module)
-  ZMK_LOAD_ARG="-DZMK_EXTRA_MODULES=$BUILD_REPO/zmk-pmw3610-driver"
+  # ZMK_EXTRA_MODULES no longer needed - using native Zephyr PMW3610 driver
+  ZMK_LOAD_ARG=""
 
   # Install only the custom shield into the ZMK module’s shields directory
   printf "⚙️  %s\n" "→ Installing custom shield ($shield) into ZMK module"
