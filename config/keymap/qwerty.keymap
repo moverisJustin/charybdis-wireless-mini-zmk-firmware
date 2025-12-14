@@ -35,7 +35,7 @@
 // ├───────────────┼────────────────┼────────────────┼─────────────────┼─────────────────┼──────┤  ├──────┼──────────────────┼──────────────────┼─────────────────┼────────────────────────┼─────────────┤
     &kp TAB         &kp A            &kp S            &kp D              &kp F            &kp G     &kp H  &kp J              &kp K              &kp L             &kp SEMICOLON            &kp APOSTROPHE
 // ├───────────────┼────────────────┼────────────────┼─────────────────┼─────────────────┼──────┤  ├──────┼──────────────────┼──────────────────┼─────────────────┼────────────────────────┼─────────────┤
-    &td_lshift_caps &ht_z_cmd LCMD Z  &ht_left LALT X  &ht_left LSHFT C   &ht_left LCTRL V  &kp B     &kp N  &kp M              &mm_comma_lt       &td_period_exclamation &mm_qm_slash             &td_minus_emdash_morph
+    &td_lshift_caps &ht_bottom LCMD Z  &ht_bottom LALT X  &ht_bottom LCTRL C   &kp V  &kp B     &kp N  &kp M              &mm_comma_lt       &td_period_exclamation &mm_qm_slash             &td_minus_emdash_morph
 // ╰───────────────┴────────────────┴────────────────┼─────────────────┼─────────────────┼──────┤  ├──────┼──────────────────┼──────────────────┴─────────────────┴────────────────────────┴─────────────╯
                                                               &ht_tg_num_nav 2 1  &ht_k37_sym_scroll 8 4  &kp BACKSPACE     &kp ENTER      &kp SPACE
                                                          // ╰───────────────┴─────────────┴────────────────╯  ╰──────────────┴──────────────╯
