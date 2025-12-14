@@ -87,6 +87,16 @@ jobs:
                       echo "🗑️ Removing zmk-pmw3610-driver bindings to avoid conflict with built-in Zephyr 4.1.0 driver"
                       rm -rf "$GITHUB_WORKSPACE/zmk-pmw3610-driver/dts" 2>/dev/null || true
                     fi
+                    
+                    # Fix prospector module Kconfig for dongle-xiao builds - add missing type to LV_DISP_DEF_REFR_PERIOD
+                    if [[ "${{ matrix.combo.format }}" == "dongle-xiao" ]]; then
+                      PROSPECTOR_KCONFIG="$GITHUB_WORKSPACE/prospector-zmk-module/boards/shields/prospector_adapter/Kconfig.defconfig"
+                      if [ -f "$PROSPECTOR_KCONFIG" ]; then
+                        echo "🔧 Fixing LV_DISP_DEF_REFR_PERIOD Kconfig option (adding missing int type)"
+                        # Use awk to add 'int' type line after the config line
+                        awk '/^config LV_DISP_DEF_REFR_PERIOD$/ { print; print "    int"; next } 1' "$PROSPECTOR_KCONFIG" > "${PROSPECTOR_KCONFIG}.tmp" && mv "${PROSPECTOR_KCONFIG}.tmp" "$PROSPECTOR_KCONFIG"
+                      fi
+                    fi
         
         echo "📦 Exporting Zephyr for external build system integration."
         west zephyr-export
