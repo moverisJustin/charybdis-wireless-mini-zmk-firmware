@@ -111,6 +111,16 @@
             hold-trigger-key-positions = <KEYS_R THUMBS>;
         };
 
+        // Z key hold-tap (works with all keys, not just right hand)
+        ht_z_cmd: z_command_hold_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            bindings = <&kp>, <&kp>;
+        };
+
         // Right-hand HRM
         ht_right: right_side_homerow_mod {
             compatible = "zmk,behavior-hold-tap";
