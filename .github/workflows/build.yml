@@ -77,6 +77,13 @@ jobs:
         echo "📦 Exporting Zephyr for external build system integration."
         west zephyr-export
 
+        # Remove Zephyr's built-in PMW3610 driver binding to avoid conflict with zmk-pmw3610-driver
+        PMW3610_BINDING="$GITHUB_WORKSPACE/zephyr/dts/bindings/input/pixart,pmw3610.yaml"
+        if [ -f "$PMW3610_BINDING" ]; then
+          echo "🔧 Removing Zephyr's built-in PMW3610 binding to avoid conflict with zmk-pmw3610-driver"
+          rm -f "$PMW3610_BINDING"
+        fi
+
         # ───────── DEBUG LOGS ─────────
         echo ""
         echo "🪳 Debug Logs"
