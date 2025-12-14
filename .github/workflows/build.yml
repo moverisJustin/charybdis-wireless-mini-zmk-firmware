@@ -148,7 +148,7 @@ jobs:
         KM="${{ matrix.combo.keymap }}"
         FM="${{ matrix.combo.format }}"   # bt | dongle | dongle-xiao | reset | reset-xiao
         NM="${{ matrix.combo.name }}"
-        BD="${{ matrix.combo.board }}"    # nice_nano | seeeduino_xiao_ble
+        BD="${{ matrix.combo.board }}"    # nice_nano | xiao_ble
 
         declare -A LIST=(
           [bt]="charybdis_left charybdis_right"
