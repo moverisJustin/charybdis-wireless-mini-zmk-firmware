@@ -9,6 +9,9 @@ manifest:
     - name: carrefinho
       url-base: https://github.com/carrefinho
 
+    - name: badjeff
+      url-base: https://github.com/badjeff
+
   projects:
     - name: zmk
       remote: zmkfirmware
@@ -20,7 +23,7 @@ manifest:
       revision: main
 
     - name: prospector-zmk-module
-      remote: carrefinho
+      remote: badjeff
       revision: main
 
   self:
