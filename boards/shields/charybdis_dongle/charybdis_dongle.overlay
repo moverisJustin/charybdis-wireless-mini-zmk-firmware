@@ -7,11 +7,11 @@
 
 / {
     chosen {
-        zmk,kscan = &mock_kscan;
+        zmk,kscan = &kscan0;
         zmk,physical-layout = &charybdis_physical_layout;
     };
 
-    mock_kscan: mock_kscan {
+    kscan0: kscan0 {
         compatible = "zmk,kscan-mock";
         columns = <0>;
         rows = <0>;
