@@ -106,8 +106,8 @@ layers:
   - HSPLIT
   - LEFT
   - DOWN
-  - UP
   - RIGHT
+  - UP
   - ''
   - ''
   - MOVE L
