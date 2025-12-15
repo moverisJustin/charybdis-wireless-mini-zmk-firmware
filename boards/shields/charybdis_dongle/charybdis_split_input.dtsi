@@ -1,6 +1,6 @@
-// Split input configuration for Charybdis trackball
-// This defines the split input infrastructure for receiving trackball data on the central (dongle)
-// Based on working Prospector split_input_common.dtsi
+// Split input configuration for Charybdis dongle
+// Defines ONLY the split input infrastructure needed by the dongle (central)
+// Does NOT include SPI/trackball hardware (that's in charybdis_pmw3610.dtsi for the right half)
 
 #include <dt-bindings/zmk/input_transform.h>
 #include <input/processors.dtsi>
@@ -22,7 +22,7 @@
         device = <&trackball_split>;
 
         /* base processor chain - sensitivity and auto mouse layer */
-        input-processors = <&zip_xy_scaler 6 6 &zip_temp_layer 3 400>;
+        input-processors = <&zip_xy_scaler 6 6 &auto_mouse_layer 3 400>;
 
         /* layer-8 scroll override */
         scroller {
@@ -42,7 +42,8 @@
         };
     };
 
-    zip_temp_layer: zip_temp_layer {
+    /* Auto mouse layer processor - activates layer 3 when trackball moves */
+    auto_mouse_layer: auto_mouse_layer {
         compatible = "zmk,input-processor-temp-layer";
         #input-processor-cells = <2>;
         require-prior-idle-ms = <500>;
