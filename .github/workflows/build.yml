@@ -148,6 +148,13 @@ jobs:
         for SH in ${LIST[$FM]}; do
           BUILD_DIR=$(mktemp -d)
 
+          # Use xiao_ble for dongle shield in dongle format, nice_nano for halves
+          if [[ "$FM" == "dongle" && "$SH" == "charybdis_dongle" ]]; then
+            BOARD="${{ matrix.combo.dongle_board }}"
+          else
+            BOARD="$BD"
+          fi
+
           # studio RPC only on right half of BT builds
           if [[ "$FM" == "bt" && "$SH" == *right ]]; then
             SNIPPET_OPTION="-DSNIPPET=studio-rpc-usb-uart"
@@ -168,7 +175,8 @@ jobs:
           echo "→ Keymap       (KM): $KM"
           echo "→ Format       (FM): $FM"
           echo "→ Name         (NM): $NM"
-          echo "→ Board        (BD): $BD"
+          echo "→ Board        (BD): $BOARD"
+          echo "→ Shield       (SH): $SH"
           echo "→ Current directory: $(pwd)"
           echo "→ KEYMAP_OPTION    :$KEYMAP_OPTION"
           echo "→ SNIPPET_OPTION   :$SNIPPET_OPTION"
@@ -182,7 +190,7 @@ jobs:
           echo "🛠 Kicking off the firmware build..."
           west build -p \
             -d "$BUILD_DIR" \
-            -b "$BD" \
+            -b "$BOARD" \
             -- \
             "-DZMK_CONFIG=$CONFIG_DIR" \
             "-DSHIELD=$SH" \

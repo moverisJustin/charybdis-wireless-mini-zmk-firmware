@@ -22,9 +22,3 @@ include:
     shield: charybdis_right
     keymap: qwerty
     snippet: studio-rpc-usb-uart
-
-  # XIAO BLE dongle (beekeeb hardware)
-  - board: xiao_ble
-    shield: charybdis_dongle
-    keymap: qwerty
-    format: dongle
