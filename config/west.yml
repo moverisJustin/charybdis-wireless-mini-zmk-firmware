@@ -17,7 +17,7 @@ manifest:
 
     - name: zmk-dongle-screen
       remote: moverisJustin
-      revision: e6b2115f3e0b2ec8a94554c23a24728ef52c775c
+      revision: c14e42c
 
   self:
     path: config
