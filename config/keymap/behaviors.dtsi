@@ -111,13 +111,17 @@
             hold-trigger-key-positions = <KEYS_R THUMBS>;
         };
 
-        // Bottom row mods (no hold-trigger restriction - works with any key)
+        // Bottom row mods - urob's timeless homerow mods approach
+        // Only triggers hold when opposite hand (left) keys are pressed
         ht_bottom: bottom_row_mod {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
+            flavor = "balanced";
             tapping-term-ms = <280>;
-            quick-tap-ms = <200>;
+            quick-tap-ms = <175>;
+            require-prior-idle-ms = <150>;
+            hold-trigger-key-positions = <KEYS_L THUMBS>;
+            hold-trigger-on-release;
             bindings = <&kp>, <&kp>;
         };
 
