@@ -4,7 +4,7 @@
 &trackball_listener {
     /* base processor chain on all layers */
     /* The XY scaler is how sensitive the sensor is. Higher numerator = more sensitive. The Temp layer is how long the auto mouse layer will stay active. It is in milliseconds so higher number means that the layer stays active for longer */
-    input-processors = <&zip_xy_scaler 4 4 &zip_temp_layer 3 200>;
+    input-processors = <&zip_xy_scaler 6 6 &zip_temp_layer 3 200>;
 
     /* layer-8 scroll override */
     scroller: scroller {
