@@ -22,3 +22,9 @@ include:
     shield: charybdis_right
     keymap: qwerty
     snippet: studio-rpc-usb-uart
+
+  # Prospector dongle with xiao_ble board
+  - board: xiao_ble
+    shield: charybdis_dongle prospector_adapter
+    keymap: qwerty
+    format: dongle

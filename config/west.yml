@@ -6,11 +6,19 @@ manifest:
     - name: 280Zo
       url-base: https://github.com/280Zo
 
+    - name: petejohanson
+      url-base: https://github.com/petejohanson
+
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
+
+    - name: prospector
+      remote: petejohanson
+      revision: main
+      path: modules/prospector
 
   self:
     path: config
