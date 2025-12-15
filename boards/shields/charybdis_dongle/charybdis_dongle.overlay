@@ -67,7 +67,8 @@
         compatible = "zmk,input-listener";
         status = "okay";
         device = <&trackball_split>;
-        // Processor chain defined in charybdis_pointer.dtsi
-        #include "charybdis_pointer.dtsi"
     };
 };
+
+// Include pointer configuration (input processors for trackball)
+#include "charybdis_pointer.dtsi"
