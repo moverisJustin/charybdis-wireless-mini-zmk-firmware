@@ -353,5 +353,15 @@
             tapping-term-ms = <200>;
             bindings = <&kp KP_MINUS>, <&macro_emdash>; // tap = keypad minus, double = em dash
         };
+
+        // F key: tap for F, hold for scroll layer
+        ht_f_scroll: f_scroll {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            bindings = <&mo>, <&kp>;
+        };
     };
 };
