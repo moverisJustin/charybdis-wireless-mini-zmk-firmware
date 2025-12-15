@@ -150,7 +150,9 @@ jobs:
 
           # Use xiao_ble for dongle shield in dongle format, nice_nano for halves
           if [[ "$FM" == "dongle" && "$SH" == "charybdis_dongle" ]]; then
-            BOARD="${{ matrix.combo.dongle_board }}"
+            DONGLE_BOARD="${{ matrix.combo.dongle_board }}"
+            # Use dongle_board if set, otherwise fall back to BD
+            BOARD="${DONGLE_BOARD:-$BD}"
           else
             BOARD="$BD"
           fi
