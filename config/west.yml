@@ -6,8 +6,8 @@ manifest:
     - name: 280Zo
       url-base: https://github.com/280Zo
 
-    - name: petejohanson
-      url-base: https://github.com/petejohanson
+    - name: carrefinho
+      url-base: https://github.com/carrefinho
 
   projects:
     - name: zmk
@@ -15,10 +15,9 @@ manifest:
       revision: main
       import: app/west.yml
 
-    - name: prospector
-      remote: petejohanson
+    - name: prospector-zmk-module
+      remote: carrefinho
       revision: main
-      path: modules/prospector
 
   self:
     path: config
