@@ -14,21 +14,21 @@ layers:
   - P
   - {t: '=', s: +}
   - TAB
-  - A
-  - S
-  - D
+  - {t: A, h: LCTRL}
+  - {t: S, h: LALT}
+  - {t: D, h: LGUI}
   - {t: F, h: Scroll}
   - G
   - H
-  - J
-  - K
-  - L
+  - {t: J, h: RGUI}
+  - {t: K, h: RALT}
+  - {t: L, h: RCTRL}
   - ;
   - ''''
   - '&td_lshift_caps'
-  - {t: Z, h: LCMD}
-  - {t: X, h: LALT}
-  - {t: C, h: LCTRL}
+  - Z
+  - X
+  - C
   - V
   - B
   - N
