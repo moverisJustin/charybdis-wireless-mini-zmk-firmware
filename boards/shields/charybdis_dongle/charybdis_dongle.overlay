@@ -1,20 +1,12 @@
 // Documentation: https://zmk.dev/docs/development/hardware-integration/dongle
 #include <dt-bindings/zmk/matrix_transform.h>
 #include "charybdis-layouts.dtsi"
-#include "charybdis_pmw3610.dtsi"
-#include "charybdis_pointer.dtsi"
+
+// NOTE: Dongle doesn't have trackball hardware, so we don't include charybdis_pmw3610.dtsi
+// The trackball is on the right keyboard half only
 
 &charybdis_physical_layout {
     transform = <&default_transform>;
-};
-
-&trackball_split {
-  status = "okay";
-};
-
-/* enable the listener on central */
-&trackball_listener {
-  status = "okay";
 };
 
 / {
@@ -57,5 +49,25 @@
     right_peripheral: bt_right {
         compatible = "zmk,ble-peripheral";
         local-name = "charybdis_right";
+    };
+
+    // Split input infrastructure to receive trackball data from right peripheral
+    split_inputs {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        trackball_split: trackball_split@0 {
+            compatible = "zmk,input-split";
+            reg = <0>;
+        };
+    };
+
+    // Input listener on central to process trackball events
+    trackball_listener: trackball_listener {
+        compatible = "zmk,input-listener";
+        status = "okay";
+        device = <&trackball_split>;
+        // Processor chain defined in charybdis_pointer.dtsi
+        #include "charybdis_pointer.dtsi"
     };
 };
