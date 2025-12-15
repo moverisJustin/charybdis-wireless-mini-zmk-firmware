@@ -110,8 +110,8 @@ layers:
   - UP
   - ''
   - ''
-  - MOVE L
-  - MOVE D
+  - '&macro_undo'
+  - '&macro_redo'
   - MOVE UP
   - MOVE R
   - ''
