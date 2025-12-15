@@ -7,6 +7,28 @@ This repository offers pre-configured ZMK firmware designed for [Wireless Charyb
 If you want to customize things the repo is set up to build through GitHub Actions (just clone and run it), or you can use the
 containerized build script that will build all firmwares locally with a single command.
 
+### Recent Updates (2025)
+
+**ZMK Zephyr 4.1 Migration**
+- Migrated to native Zephyr PMW3610 driver (removed external driver dependency)
+- Updated all device tree configurations for Zephyr 4.1 compatibility
+- Fixed trackball direction issues (inverted Y-axis)
+
+**Trackball & Input Improvements**
+- Increased cursor sensitivity to 6×6 scaler for faster movement
+- Reduced auto-mouse layer timeout to 400ms to minimize false activations during typing
+- Fixed scroll layer activation on F key (K16)
+
+**Bottom-Row Modifier Fixes**
+- Fixed Z/X/C keys not responding after idle periods
+- Reduced `require-prior-idle-ms` from 100ms to 50ms for more responsive tap behavior
+- Maintained hold functionality for Command/Option/Control modifiers
+
+**NAV Layer Enhancements**
+- Reorganized arrow keys to logical LEFT→DOWN→RIGHT pattern (matching WASD-style navigation)
+- Added dedicated Undo (Cmd+Z) and Redo (Cmd+Shift+Z) on Z and X keys
+- Improved desktop switching shortcuts for macOS workflow
+
 
 ## Quick Start
 
@@ -66,8 +88,10 @@ I don't like home row mods because I just haven't ever really committed to using
 
 | Side                | Hold = Modifier              | Tap = Letter / Key  |
 | ------------------- | ---------------------------- | ------------------- |
-| Left (K25-K28)      | **Command / Option / Shift / Control ** | `Z X C V`          |
-| Left (K24)          | **Left Shift**               | `Left Shift`        |
+| Left (K25)          | **Command (Cmd)**            | `Z`                 |
+| Left (K26)          | **Option (Alt)**             | `X`                 |
+| Left (K27)          | **Control (Ctrl)**           | `C`                 |
+| Left (K24)          | **Left Shift** (double-tap for Caps Lock) | `Left Shift`  |
 
 🔗 Combos
 | Trigger Keys               | Result                                 |
@@ -83,51 +107,57 @@ I don't like home row mods because I just haven't ever really committed to using
 | Setting                    | Value                                        |
 | -------------------------- | -------------------------------------------- |
 | **Auto-Mouse Activation**  | Automatically activates MOUSE layer (3) on trackball movement |
-| **Auto-Mouse Sensitivity** | XY Scaler: `4 4` (lower = less sensitive)    |
-| **Auto-Mouse Timeout**     | 600ms of inactivity returns to BASE          |
-| **Scroll Layer**           | Hold key (K37) activates SCROLL layer (9)  |
+| **Auto-Mouse Sensitivity** | XY Scaler: `6 6` (lower = less sensitive)    |
+| **Auto-Mouse Timeout**     | 400ms of inactivity returns to BASE          |
+| **Scroll Layer**           | Hold F key (K16) activates SCROLL layer (8)  |
 | **Scroll Sensitivity**     | Base `4 4` + Scroll `2 15` scalers           |
-| **Slow Pointer**           | Layer 7 (currently not activated)            |
+| **Slow Pointer**           | Layer 6 - reduced sensitivity for precision work |
 
-🔗 Combos I want to add to match what I have used previously
+🔗 Special Tap-Dance Behaviors (Implemented)
 | Trigger Keys                  | Result                                 |
 | -------------------------     | -------------------------------------- |
-| Double Tap `C`                | **Copy** Double tapping C should generate a CMD*C keystroke |
-| Double Tap `X`                | **Cut** Double tapping X should generate a CMD*X keystroke |
-| Double Tap `V`                | **Paste** Double tapping V should generate a CMD*V keystroke |
-| Double Tap `Z`                | **Undo** Double tapping Z should generate a CMD*Z keystroke |
-| Triple Tap `Z`                | **Redo** Triple tapping Z should generate a SHIFT*CMD*Z keystroke |
-| Double Tap `S`                | **Save** Double tapping S should generate a CMD*S keystroke |
-| Double Tap `B`                | **Bold** Double tapping B should generate a CMD*B keystroke |
-| Double Tap `I`                | **Italics** Double tapping I should generate a CMD*I keystroke |
-| Double Tap `O`                | **Underline** Double tapping U should generate a CMD*U keystroke |
-| Double Tap `Left Shift`       | **Caps Lock** Double tapping the left Shift should generate activate or deactivate the capslock |
-| Double Tap `.`                | **Exclamation Point** Double tapping . should generate a ! keystroke |
-| Double Tap `-`                | **Emdash** Double tapping - should generate an emdash |
+| Double Tap `Left Shift`       | **Caps Lock** (toggle on/off) |
+| Double Tap `.`                | **Exclamation Point** (!) |
+| Double Tap `-`                | **Em Dash** (—) |
+| NAV Layer `Z`                 | **Undo** (Cmd+Z) |
+| NAV Layer `X`                 | **Redo** (Cmd+Shift+Z) |
+
+🔗 Combos I want to add in the future
+| Trigger Keys                  | Result                                 |
+| -------------------------     | -------------------------------------- |
+| Double Tap `C`                | **Copy** Double tapping C should generate a CMD+C keystroke |
+| Double Tap `X`                | **Cut** Double tapping X should generate a CMD+X keystroke |
+| Double Tap `V`                | **Paste** Double tapping V should generate a CMD+V keystroke |
+| Double Tap `S`                | **Save** Double tapping S should generate a CMD+S keystroke |
+| Double Tap `B`                | **Bold** Double tapping B should generate a CMD+B keystroke |
+| Double Tap `I`                | **Italics** Double tapping I should generate a CMD+I keystroke |
+| Double Tap `U`                | **Underline** Double tapping U should generate a CMD+U keystroke |
 | `K5 + K6`                     | Shift+Cmd+4 to generate a selective screen shot          |  
 
-⌨️ Base layer changes I still need to make
-| Trigger Keys                  | Result                                 |
-| -------------------------     | -------------------------------------- |
-| `K11`                         | = and + (on shift) |
-| `K32`                         | , and < (on shift) |
-| `K33`                         | . and > (on shift) |
-| `K34`                         | ? and / (on shift instead of exclamation point on shift) |
-| `K35`                         | - and _ (on shift) |
-| `K37`                         | **Layer Shift** to Sym on tap and to Scroll on hold. Maybe Slow on double tap? |
-| `K16`                         | Make it so that it is only the F key. No longer tied to a scroll layer shift |
+⌨️ Base Layer Mod-Morph Keys (Implemented)
+| Key Position | Tap (Normal) | Shift (Modified) |
+| ------------ | ------------ | ---------------- |
+| `K11`        | `=`          | `+`              |
+| `K32`        | `,`          | `<`              |
+| `K33`        | `.`          | `>`              |
+| `K34`        | `?`          | `/`              |
+| `K35`        | `-`          | `_`              |
+| `K16` (F key)| `F`          | Hold activates SCROLL layer (8) |
+| `K37`        | Tap → SYM (4), Hold → SCROLL (8) |
 
-⌨️ Nav layer changes I still need to make
-| Trigger Keys                  | Result                                 |
-| -------------------------     | -------------------------------------- |
-| `K39`                         | **On Tap** Volume down **On Double Tap** Mute/Unmute |
-| `K40`                         | Volume up |
-| `K7`                          | Shift desktop left |
-| `K9`                          | Shift desktop right |
-| `K8`                          | Up arrow |
-| `K20`                         | Down arrow |
-| `K19`                         | Left arrow |
-| `K21`                         | Right arrow |
+⌨️ NAV Layer (Implemented)
+| Key Position | Function                                    |
+| ------------ | ------------------------------------------- |
+| `K39`        | Tap → Volume Down, Double Tap → Mute/Unmute |
+| `K40`        | Volume Up                                    |
+| `K7`         | Switch Desktop Left (macOS)                  |
+| `K9`         | Switch Desktop Right (macOS)                 |
+| `K8`         | Up Arrow                                     |
+| `K19`        | Left Arrow                                   |
+| `K20`        | Down Arrow                                   |
+| `K21`        | Right Arrow                                  |
+| `K25`        | Undo (Cmd+Z)                                 |
+| `K26`        | Redo (Cmd+Shift+Z)                          |
 
 ⌨️ Num layer changes I still need to make
 | Trigger Keys                  | Result                                 |
