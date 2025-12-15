@@ -140,6 +140,11 @@ jobs:
           [reset]="settings_reset"
         )
 
+        # Shields that should be added as compound shields for dongle display
+        declare -A EXTRA_SHIELDS=(
+          [charybdis_dongle]="dongle_screen"
+        )
+
         mkdir -p "$GITHUB_WORKSPACE/out/$NM"
         CONFIG_DIR="$GITHUB_WORKSPACE/config"
         
@@ -189,13 +194,19 @@ jobs:
           # echo "GITHUB_WORKSPACE:"
           # tree $GITHUB_WORKSPACE
 
+          # Check if this shield needs additional shields (e.g., dongle_screen for charybdis_dongle)
+          SHIELD_ARG="$SH"
+          if [[ -n "${EXTRA_SHIELDS[$SH]:-}" ]]; then
+            SHIELD_ARG="$SH ${EXTRA_SHIELDS[$SH]}"
+          fi
+
           echo "🛠 Kicking off the firmware build..."
           west build -p \
             -d "$BUILD_DIR" \
             -b "$BOARD" \
             -- \
             "-DZMK_CONFIG=$CONFIG_DIR" \
-            "-DSHIELD=$SH" \
+            "-DSHIELD=$SHIELD_ARG" \
             "$KEYMAP_OPTION" \
             "$SNIPPET_OPTION"
 

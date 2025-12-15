@@ -1,24 +1,5 @@
-// XIAO BLE board overlay for beekeeb dongle with OLED display
-// This adds I2C OLED display support to the xiao_ble board
+// XIAO BLE board overlay for beekeeb dongle
+// Display configuration is provided by the dongle_screen shield (zmk-dongle-screen module)
+// This file can be used for any additional board-specific customizations
 
-&xiao_i2c {
-    status = "okay";
-
-    oled: ssd1306@3c {
-        compatible = "solomon,ssd1306fb";
-        reg = <0x3c>;
-        width = <128>;
-        height = <32>;
-        segment-offset = <0>;
-        page-offset = <0>;
-        display-offset = <0>;
-        multiplex-ratio = <31>;
-        prechargep = <0x22>;
-    };
-};
-
-/ {
-    chosen {
-        zephyr,display = &oled;
-    };
-};
+// No additional overlays needed - dongle_screen provides ST7789V display config
