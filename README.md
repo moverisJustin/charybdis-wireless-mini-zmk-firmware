@@ -106,6 +106,7 @@ I don't like home row mods because I just haven't ever really committed to using
 🔗 Trackball Configuration
 | Setting                    | Value                                        |
 | -------------------------- | -------------------------------------------- |
+| **Sensor CPI**             | 1200 (configurable in `config/charybdis_pmw3610.dtsi`) |
 | **Auto-Mouse Activation**  | Automatically activates MOUSE layer (3) on trackball movement |
 | **Auto-Mouse Sensitivity** | XY Scaler: `6 6` (lower = less sensitive)    |
 | **Auto-Mouse Timeout**     | 400ms of inactivity returns to BASE          |
