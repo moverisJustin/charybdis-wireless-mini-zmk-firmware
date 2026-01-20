@@ -199,6 +199,7 @@ jobs:
             -b "$SHIELD_BOARD" \
             -- \
             "-DZMK_CONFIG=$CONFIG_DIR" \
+            "-DZMK_EXTRA_MODULES=$GITHUB_WORKSPACE/zmk-maccel" \
             "-DSHIELD=$SHIELD_STRING" \
             "$KEYMAP_OPTION" \
             "$SNIPPET_OPTION"
