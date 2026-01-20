@@ -1,0 +1,4 @@
+name: zmk-maccel
+build:
+  cmake: .
+  kconfig: Kconfig
