@@ -1,0 +1,41 @@
+description: |
+  Mouse acceleration input processor for ZMK.
+  Applies velocity-based scaling to trackball input, providing
+  precision for slow movements and speed for fast sweeps.
+
+compatible: "zmk,input-processor-maccel"
+
+properties:
+  "#input-processor-cells":
+    type: int
+    required: true
+    const: 0
+    description: Number of cells in the input processor specifier (always 0 for maccel)
+
+  slow-threshold:
+    type: int
+    default: 5
+    description: |
+      Velocity threshold (distance/ms) below which slow-factor is applied.
+      Lower values make slow mode more sensitive.
+
+  fast-threshold:
+    type: int
+    default: 20
+    description: |
+      Velocity threshold (distance/ms) above which full speed (100%) is applied.
+      Values between slow and fast thresholds use med-factor.
+
+  slow-factor:
+    type: int
+    default: 30
+    description: |
+      Multiplication factor (as percentage) for slow movements.
+      30 = 30% of original movement. Lower values = more precision.
+
+  med-factor:
+    type: int
+    default: 60
+    description: |
+      Multiplication factor (as percentage) for medium-speed movements.
+      60 = 60% of original movement.

@@ -22,10 +22,28 @@
     };
   };
 
+  /* Mouse acceleration processor - velocity-based scaling
+   * slow-threshold: velocity below this uses slow-factor (precision mode)
+   * fast-threshold: velocity above this uses full speed
+   * slow-factor: percentage for slow movements (30 = 30%)
+   * med-factor: percentage for medium movements (60 = 60%)
+   */
+  maccel: maccel {
+    compatible = "zmk,input-processor-maccel";
+    #input-processor-cells = <0>;
+    slow-threshold = <5>;
+    fast-threshold = <20>;
+    slow-factor = <30>;
+    med-factor = <60>;
+  };
+
   trackball_listener: trackball_listener {
     compatible = "zmk,input-listener";
     status = "disabled";
     device = <&trackball_split>;
+
+    /* maccel applies velocity-based acceleration first, then temp layer activates mouse layer */
+    input-processors = <&maccel>;
 
     snipe {
       layers = <SLOW>;
@@ -39,7 +57,7 @@
 
     move {
       layers = <BASE MOUSE>;
-      input-processors = <&auto_mouse_layer MOUSE 400>;
+      input-processors = <&maccel &auto_mouse_layer MOUSE 400>;
     };
   };
 

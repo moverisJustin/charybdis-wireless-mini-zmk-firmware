@@ -126,8 +126,8 @@ for shield in "${shields[@]}"; do
   setup_sandbox "$shield"
   cd "$BUILD_REPO/zmk"
 
-  # ZMK_EXTRA_MODULES no longer needed - using native Zephyr PMW3610 driver
-  ZMK_LOAD_ARG=""
+  # Include zmk-maccel module for mouse acceleration
+  ZMK_LOAD_ARG="-DZMK_EXTRA_MODULES=$REPO_ROOT/zmk-maccel"
 
   # Install only the custom shield into the ZMK module’s shields directory
   printf "⚙️  %s\n" "→ Installing custom shield ($shield) into ZMK module"

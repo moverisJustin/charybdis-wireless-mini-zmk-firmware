@@ -1,0 +1,5 @@
+if(CONFIG_ZMK_INPUT_PROCESSOR_MACCEL)
+  zephyr_library()
+  zephyr_library_sources(src/input_processor_maccel.c)
+  zephyr_library_include_directories(${ZEPHYR_ZMK_MODULE_DIR}/include)
+endif()
