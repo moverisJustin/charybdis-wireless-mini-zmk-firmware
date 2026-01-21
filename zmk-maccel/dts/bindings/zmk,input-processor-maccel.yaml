@@ -12,6 +12,10 @@ properties:
     const: 0
     description: Number of cells in the input processor specifier (always 0 for maccel)
 
+  track-remainders:
+    type: boolean
+    description: Whether to track remainders for this processor (for ZMK input system)
+
   slow-threshold:
     type: int
     default: 5
