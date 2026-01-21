@@ -15,10 +15,9 @@
 
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
-#include <zephyr/input/input.h>
-#include <zephyr/input/input_event_codes.h>
-#include <zephyr/logging/log.h>
 #include <drivers/input_processor.h>
+
+#include <zephyr/logging/log.h>
 
 LOG_MODULE_REGISTER(maccel, CONFIG_ZMK_LOG_LEVEL);
 
@@ -91,7 +90,7 @@ static int maccel_handle_event(const struct device *dev, struct input_event *eve
     struct maccel_state *ms = &maccel_states[idx];
 
     /* Only process relative X/Y movement events */
-    if (event->type != EV_REL) {
+    if (event->type != INPUT_EV_REL) {
         return ZMK_INPUT_PROC_CONTINUE;
     }
 
