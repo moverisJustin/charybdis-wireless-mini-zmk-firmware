@@ -10,33 +10,29 @@ keymap_dir = Path(__file__).parent.parent / "config" / "keymap"
 keymaps = sorted(p.stem for p in keymap_dir.glob("*.keymap"))
 
 # Map each format to the shields it should build
-# All shields now live in charybdis_bt directory
+# All shields now live in charybdis directory
 format_shields = {
-    # BT mode: right acts as central (standalone)
-    "bt": ["charybdis_left", "charybdis_right_standalone"],
-    # Dongle mode: right acts as peripheral, dongle is central
-    "dongle": ["charybdis_left", "dongle_charybdis_right", "dongle_prospector"],
+    # Dongle mode: left+right as peripherals, dongle as central
+    "dongle": ["charybdis_left", "charybdis_right", "charybdis_dongle"],
     "reset": ["settings_reset"],
 }
 
 # Map shields to their boards (most use nice_nano, dongle uses xiao)
 shield_boards = {
     "charybdis_left": "nice_nano",
-    "charybdis_right_standalone": "nice_nano",
-    "dongle_charybdis_right": "nice_nano",
-    "dongle_prospector": "xiao_ble",
+    "charybdis_right": "nice_nano",
+    "charybdis_dongle": "xiao_ble",
     "settings_reset": "nice_nano",
 }
 
 groups = []
 for keymap in keymaps:
-    for fmt in ["bt", "dongle"]:
-        groups.append({
-            "keymap": keymap,
-            "format": fmt,
-            "name": f"{keymap}-{fmt}",
-            "board": board,
-        })
+    groups.append({
+        "keymap": keymap,
+        "format": "dongle",
+        "name": f"{keymap}-dongle",
+        "board": board,
+    })
 
 # single reset entry
 groups.append({

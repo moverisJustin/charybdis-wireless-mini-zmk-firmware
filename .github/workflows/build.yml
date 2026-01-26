@@ -116,13 +116,8 @@ jobs:
       run: |
         ZMK_SHIELDS_DIR="$GITHUB_WORKSPACE/zmk/app/boards/shields"
         mkdir -p "$ZMK_SHIELDS_DIR"
-        # All shields now live in charybdis_bt directory (both bt and dongle modes)
-        cp -r "boards/shields/charybdis_bt" "$ZMK_SHIELDS_DIR/"
-        for d in "$ZMK_SHIELDS_DIR"/*; do
-          for f in charybdis-layouts.dtsi charybdis_pmw3610.dtsi charybdis_pointer.dtsi; do
-            [ -f "config/$f" ] && cp "config/$f" "$d/" || true
-          done
-        done
+        # Copy charybdis shield directory
+        cp -r "boards/shields/charybdis" "$ZMK_SHIELDS_DIR/"
 
     # ───────── Build ─────────
     - name: Build combo ${{ matrix.combo.name }}
@@ -137,22 +132,20 @@ jobs:
         BD="${{ matrix.combo.board }}"    # nice_nano (default)
 
         # Shield lists for each format
-        # bt mode: right acts as central (standalone)
-        # dongle mode: right acts as peripheral, dongle_prospector is central
+        # dongle mode: left+right as peripherals, dongle as central
         declare -A LIST=(
-          [bt]="charybdis_left charybdis_right_standalone"
-          [dongle]="charybdis_left dongle_charybdis_right dongle_prospector"
+          [dongle]="charybdis_left charybdis_right charybdis_dongle"
           [reset]="settings_reset"
         )
 
         # Board overrides for specific shields
         declare -A BOARD_OVERRIDE=(
-          [dongle_prospector]="xiao_ble"
+          [charybdis_dongle]="xiao_ble"
         )
 
         # Shield additions (e.g., for display adapters)
         declare -A SHIELD_EXTRA=(
-          [dongle_prospector]="prospector_adapter"
+          [charybdis_dongle]="prospector_adapter"
         )
 
         mkdir -p "$GITHUB_WORKSPACE/out/$NM"
@@ -172,8 +165,8 @@ jobs:
             SHIELD_STRING="$SH ${SHIELD_EXTRA[$SH]}"
           fi
 
-          # studio RPC only on right standalone of BT builds
-          if [[ "$FM" == "bt" && "$SH" == *right* ]]; then
+          # studio RPC on dongle build
+          if [[ "$SH" == "charybdis_dongle" ]]; then
             SNIPPET_OPTION="-DSNIPPET=studio-rpc-usb-uart"
           else
             SNIPPET_OPTION=""
