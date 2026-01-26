@@ -1,0 +1,91 @@
+/*
+ * Copyright (c) 2025 Justin Keene
+ * SPDX-License-Identifier: MIT
+ *
+ * Common hardware configuration for Charybdis Mini right keyboard variants
+ * Shared between charybdis_right_standalone and dongle_charybdis_right
+ */
+
+#include "charybdis.dtsi"
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+// The matrix transform is 6 columns over because the left half is 6 columns wide.
+&default_transform {
+    col-offset = <6>;
+};
+
+&five_column_transform {
+    col-offset = <5>;
+};
+
+// KSCAN matrix for right half
+&kscan0 {
+    compatible = "zmk,kscan-gpio-matrix";
+
+    col-gpios
+        = <&pro_micro 19 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro 6 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro 7 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        , <&pro_micro 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
+        ;
+
+    row-gpios
+        = <&pro_micro 18 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 5 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 4 GPIO_ACTIVE_HIGH>
+        , <&pro_micro 9 GPIO_ACTIVE_HIGH>
+        ;
+};
+
+// SPI and trackball configuration
+&pinctrl {
+    spi0_default: spi0_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 8)>,
+                <NRF_PSEL(SPIM_MOSI, 0, 17)>,
+                <NRF_PSEL(SPIM_MISO, 0, 17)>;
+        };
+    };
+
+    spi0_sleep: spi0_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 8)>,
+                <NRF_PSEL(SPIM_MOSI, 0, 17)>,
+                <NRF_PSEL(SPIM_MISO, 0, 17)>;
+            low-power-enable;
+        };
+    };
+};
+
+&spi0 {
+    status = "okay";
+    compatible = "nordic,nrf-spim";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio0 20 GPIO_ACTIVE_LOW>;
+
+    trackball: trackball@0 {
+        status = "okay";
+        compatible = "pixart,pmw3610";
+        reg = <0>;
+        spi-max-frequency = <2000000>;
+        motion-gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        res-cpi = <1200>;
+
+        /* Normal X/Y axis mapping */
+        zephyr,axis-x = <INPUT_REL_X>;
+        zephyr,axis-y = <INPUT_REL_Y>;
+
+        /* Invert both axes */
+        invert-x;
+        invert-y;
+
+        /* Enable smart mode algorithm */
+        smart-mode;
+
+        force-awake;
+    };
+};

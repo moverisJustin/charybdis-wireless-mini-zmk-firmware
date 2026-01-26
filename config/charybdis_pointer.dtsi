@@ -1,25 +1,11 @@
-#include <input/processors.dtsi>
-#include <dt-bindings/zmk/input_transform.h>
-
-&trackball_listener {
-    /* base processor chain on all layers */
-    /* The XY scaler is how sensitive the sensor is. Higher numerator = more sensitive. The Temp layer is how long the auto mouse layer will stay active. It is in milliseconds so higher number means that the layer stays active for longer */
-    input-processors = <&zip_xy_scaler 6 6 &zip_temp_layer 3 400>;
-
-    /* layer-8 scroll override */
-    scroller: scroller {
-        layers           = <8>;
-        input-processors = <
-            &zip_xy_scaler 4 4                               // Base mouse sensitivity matching BASE layer
-            &zip_xy_scaler 2 15                              // Scales the scroll speed
-            &zip_xy_to_scroll_mapper                         // Converts XY movement to scroll events
-            &zip_scroll_transform (INPUT_TRANSFORM_Y_INVERT) // Inverts the scroll direction
-        >;
-    };
-
-    /* layer-6 slow-pointer override */
-    slow_pointer: slow_pointer {
-        layers           = <6>;
-        input-processors = <&zip_xy_scaler 2 6>;
-    };
-};
+/*
+ * Copyright (c) 2025 Justin Keene
+ * SPDX-License-Identifier: MIT
+ *
+ * NOTE: This file is kept for backwards compatibility but is no longer used.
+ * Trackball processor configurations are now embedded in the shield files:
+ * - boards/shields/charybdis_bt/charybdis_trackball_processors.dtsi
+ *
+ * The processor chain is defined as a macro (CHARYBDIS_TRACKBALL_PROCESSORS)
+ * and used by both standalone and dongle configurations.
+ */

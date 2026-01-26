@@ -1,5 +1,16 @@
+# Charybdis Mini keyboard shield configurations
+
 config SHIELD_CHARYBDIS_LEFT
 	def_bool $(shields_list_contains,charybdis_left)
 
-config SHIELD_CHARYBDIS_RIGHT
-	def_bool $(shields_list_contains,charybdis_right)
+# Standalone mode - right acts as central (BT mode)
+config SHIELD_CHARYBDIS_RIGHT_STANDALONE
+	def_bool $(shields_list_contains,charybdis_right_standalone)
+
+# Dongle mode - right acts as peripheral
+config SHIELD_DONGLE_CHARYBDIS_RIGHT
+	def_bool $(shields_list_contains,dongle_charybdis_right)
+
+# Dongle variants
+config SHIELD_DONGLE_PROSPECTOR
+	def_bool $(shields_list_contains,dongle_prospector)

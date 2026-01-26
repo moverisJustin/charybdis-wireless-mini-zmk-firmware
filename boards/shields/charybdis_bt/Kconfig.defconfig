@@ -1,4 +1,7 @@
-if SHIELD_CHARYBDIS_RIGHT
+# Charybdis Mini keyboard default configurations
+
+# Standalone mode - right acts as central
+if SHIELD_CHARYBDIS_RIGHT_STANDALONE
 
 config ZMK_KEYBOARD_NAME
 	default "Charybdis"
@@ -8,9 +11,29 @@ config ZMK_SPLIT_BLE_ROLE_CENTRAL
 
 endif
 
-if SHIELD_CHARYBDIS_LEFT || SHIELD_CHARYBDIS_RIGHT
+# Dongle mode - right acts as peripheral (no central role, no keyboard name)
+if SHIELD_DONGLE_CHARYBDIS_RIGHT
+
+config ZMK_KEYBOARD_NAME
+	default "Charybdis Right"
+
+endif
+
+# Prospector dongle - acts as central
+if SHIELD_DONGLE_PROSPECTOR
+
+config ZMK_KEYBOARD_NAME
+	default "Charybdis"
+
+config ZMK_SPLIT_BLE_ROLE_CENTRAL
+	default y
+
+endif
+
+# Enable split for all shield variants
+if SHIELD_CHARYBDIS_LEFT || SHIELD_CHARYBDIS_RIGHT_STANDALONE || SHIELD_DONGLE_CHARYBDIS_RIGHT || SHIELD_DONGLE_PROSPECTOR
 
 config ZMK_SPLIT
 	default y
-	
+
 endif
