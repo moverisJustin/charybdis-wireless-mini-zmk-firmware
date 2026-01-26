@@ -1,0 +1,70 @@
+#include <dt-bindings/zmk/input_transform.h>
+#include <input/processors.dtsi>
+
+#define BASE 0
+#define NAV 1
+#define NUM 2
+#define MOUSE 3
+#define MEDIA 4
+#define FN 5
+#define SLOW 6
+#define GAME 7
+#define SCROLL 8
+
+/ {
+  split_inputs {
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    trackball_split: trackball_split@0 {
+      compatible = "zmk,input-split";
+      reg = <0>;
+    };
+  };
+
+  /* Mouse acceleration processor - velocity-based scaling
+   * slow-threshold: velocity below this uses slow-factor (precision mode)
+   * fast-threshold: velocity above this uses full speed
+   * slow-factor: percentage for slow movements (30 = 30%)
+   * med-factor: percentage for medium movements (60 = 60%)
+   */
+  maccel: maccel {
+    compatible = "zmk,input-processor-maccel";
+    #input-processor-cells = <0>;
+    slow-threshold = <5>;
+    fast-threshold = <20>;
+    slow-factor = <30>;
+    med-factor = <60>;
+  };
+
+  trackball_listener: trackball_listener {
+    compatible = "zmk,input-listener";
+    status = "disabled";
+    device = <&trackball_split>;
+
+    /* maccel disabled for testing - uncomment to re-enable */
+    /* input-processors = <&maccel>; */
+
+    snipe {
+      layers = <SLOW>;
+      input-processors = <&zip_xy_scaler 1 3>;
+    };
+
+    scroll {
+      layers = <SCROLL>;
+      input-processors = <&zip_xy_transform (INPUT_TRANSFORM_Y_INVERT)>, <&zip_xy_scaler 1 16>, <&zip_xy_to_scroll_mapper>;
+    };
+
+    move {
+      layers = <BASE MOUSE>;
+      /* 800 CPI * 1.5x scaler = ~1200 effective, but lower base for precision */
+      input-processors = <&zip_xy_scaler 3 2 &auto_mouse_layer MOUSE 400>;
+    };
+  };
+
+  auto_mouse_layer: auto_mouse_layer {
+    compatible = "zmk,input-processor-temp-layer";
+    #input-processor-cells = <2>;
+    require-prior-idle-ms = <500>;
+  };
+};

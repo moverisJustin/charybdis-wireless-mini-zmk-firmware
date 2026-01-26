@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - 'feature/**'
     tags:
       - 'v1.0.1'
   workflow_dispatch:
@@ -115,12 +116,8 @@ jobs:
       run: |
         ZMK_SHIELDS_DIR="$GITHUB_WORKSPACE/zmk/app/boards/shields"
         mkdir -p "$ZMK_SHIELDS_DIR"
-        cp -r "boards/shields/charybdis_${{ matrix.combo.format }}" "$ZMK_SHIELDS_DIR/"
-        for d in "$ZMK_SHIELDS_DIR"/*; do
-          for f in charybdis-layouts.dtsi charybdis_pmw3610.dtsi charybdis_pointer.dtsi; do
-            [ -f "config/$f" ] && cp "config/$f" "$d/" || true
-          done
-        done
+        # Copy charybdis shield directory
+        cp -r "boards/shields/charybdis" "$ZMK_SHIELDS_DIR/"
 
     # ───────── Build ─────────
     - name: Build combo ${{ matrix.combo.name }}
@@ -132,24 +129,44 @@ jobs:
         KM="${{ matrix.combo.keymap }}"
         FM="${{ matrix.combo.format }}"   # bt | dongle | reset
         NM="${{ matrix.combo.name }}"
-        BD="${{ matrix.combo.board }}"    # nice_nano
+        BD="${{ matrix.combo.board }}"    # nice_nano (default)
 
+        # Shield lists for each format
+        # dongle mode: left+right as peripherals, dongle as central
         declare -A LIST=(
-          [bt]="charybdis_left charybdis_right"
           [dongle]="charybdis_left charybdis_right charybdis_dongle"
           [reset]="settings_reset"
         )
 
+        # Board overrides for specific shields
+        declare -A BOARD_OVERRIDE=(
+          [charybdis_dongle]="xiao_ble"
+        )
+
+        # Shield additions (e.g., for display adapters)
+        declare -A SHIELD_EXTRA=(
+          [charybdis_dongle]="prospector_adapter"
+        )
+
         mkdir -p "$GITHUB_WORKSPACE/out/$NM"
         CONFIG_DIR="$GITHUB_WORKSPACE/config"
-        
+
         # ──────────────────────────────────────────────────────────────
 
         for SH in ${LIST[$FM]}; do
           BUILD_DIR=$(mktemp -d)
 
-          # studio RPC only on right half of BT builds
-          if [[ "$FM" == "bt" && "$SH" == *right ]]; then
+          # Use board override if defined, otherwise use default
+          SHIELD_BOARD="${BOARD_OVERRIDE[$SH]:-$BD}"
+
+          # Build shield string (may include extras like prospector_adapter)
+          SHIELD_STRING="$SH"
+          if [[ -n "${SHIELD_EXTRA[$SH]:-}" ]]; then
+            SHIELD_STRING="$SH ${SHIELD_EXTRA[$SH]}"
+          fi
+
+          # studio RPC on dongle build
+          if [[ "$SH" == "charybdis_dongle" ]]; then
             SNIPPET_OPTION="-DSNIPPET=studio-rpc-usb-uart"
           else
             SNIPPET_OPTION=""
@@ -168,24 +185,22 @@ jobs:
           echo "→ Keymap       (KM): $KM"
           echo "→ Format       (FM): $FM"
           echo "→ Name         (NM): $NM"
-          echo "→ Board        (BD): $BD"
+          echo "→ Shield       (SH): $SH"
+          echo "→ Shield String    : $SHIELD_STRING"
+          echo "→ Board   (SHIELD_BOARD): $SHIELD_BOARD"
           echo "→ Current directory: $(pwd)"
           echo "→ KEYMAP_OPTION    :$KEYMAP_OPTION"
           echo "→ SNIPPET_OPTION   :$SNIPPET_OPTION"
           echo "→ Build dir        : $BUILD_DIR"
-          # echo "→ Directory contents:"
-          # tree .
-          # echo "📍 Showing current build directory and listing contents:"
-          # echo "GITHUB_WORKSPACE:"
-          # tree $GITHUB_WORKSPACE
 
           echo "🛠 Kicking off the firmware build..."
           west build -p \
             -d "$BUILD_DIR" \
-            -b "$BD" \
+            -b "$SHIELD_BOARD" \
             -- \
             "-DZMK_CONFIG=$CONFIG_DIR" \
-            "-DSHIELD=$SH" \
+            "-DZMK_EXTRA_MODULES=$GITHUB_WORKSPACE/zmk-maccel" \
+            "-DSHIELD=$SHIELD_STRING" \
             "$KEYMAP_OPTION" \
             "$SNIPPET_OPTION"
 

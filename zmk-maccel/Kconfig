@@ -1,0 +1,7 @@
+config ZMK_INPUT_PROCESSOR_MACCEL
+    bool "Mouse acceleration input processor"
+    default y
+    help
+      Enable velocity-based mouse acceleration for trackballs.
+      This processor scales mouse movement based on velocity,
+      providing precision for slow movements and speed for fast sweeps.
