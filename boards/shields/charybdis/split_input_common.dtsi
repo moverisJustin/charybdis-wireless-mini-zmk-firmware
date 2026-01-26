@@ -57,8 +57,8 @@
 
     move {
       layers = <BASE MOUSE>;
-      /* maccel disabled for testing */
-      input-processors = <&auto_mouse_layer MOUSE 400>;
+      /* 800 CPI * 1.5x scaler = ~1200 effective, but lower base for precision */
+      input-processors = <&zip_xy_scaler 3 2 &auto_mouse_layer MOUSE 400>;
     };
   };
 
