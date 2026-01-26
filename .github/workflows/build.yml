@@ -145,7 +145,7 @@ jobs:
 
         # Shield additions (e.g., for display adapters)
         declare -A SHIELD_EXTRA=(
-          [charybdis_dongle]="dongle_screen"
+          [charybdis_dongle]="prospector_adapter"
         )
 
         mkdir -p "$GITHUB_WORKSPACE/out/$NM"
