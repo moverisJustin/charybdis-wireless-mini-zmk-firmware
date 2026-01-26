@@ -150,6 +150,11 @@ jobs:
           [dongle_prospector]="xiao_ble"
         )
 
+        # Shield additions (e.g., for display adapters)
+        declare -A SHIELD_EXTRA=(
+          [dongle_prospector]="prospector_adapter"
+        )
+
         mkdir -p "$GITHUB_WORKSPACE/out/$NM"
         CONFIG_DIR="$GITHUB_WORKSPACE/config"
 
@@ -160,6 +165,12 @@ jobs:
 
           # Use board override if defined, otherwise use default
           SHIELD_BOARD="${BOARD_OVERRIDE[$SH]:-$BD}"
+
+          # Build shield string (may include extras like prospector_adapter)
+          SHIELD_STRING="$SH"
+          if [[ -n "${SHIELD_EXTRA[$SH]:-}" ]]; then
+            SHIELD_STRING="$SH ${SHIELD_EXTRA[$SH]}"
+          fi
 
           # studio RPC only on right standalone of BT builds
           if [[ "$FM" == "bt" && "$SH" == *right* ]]; then
@@ -182,6 +193,7 @@ jobs:
           echo "→ Format       (FM): $FM"
           echo "→ Name         (NM): $NM"
           echo "→ Shield       (SH): $SH"
+          echo "→ Shield String    : $SHIELD_STRING"
           echo "→ Board   (SHIELD_BOARD): $SHIELD_BOARD"
           echo "→ Current directory: $(pwd)"
           echo "→ KEYMAP_OPTION    :$KEYMAP_OPTION"
@@ -194,7 +206,7 @@ jobs:
             -b "$SHIELD_BOARD" \
             -- \
             "-DZMK_CONFIG=$CONFIG_DIR" \
-            "-DSHIELD=$SH" \
+            "-DSHIELD=$SHIELD_STRING" \
             "$KEYMAP_OPTION" \
             "$SNIPPET_OPTION"
 
