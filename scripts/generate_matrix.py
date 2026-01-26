@@ -3,7 +3,7 @@ from pathlib import Path
 
 # === CONFIGURATION ===
 board = "nice_nano"
-dongle_board = "seeeduino_xiao_ble"
+dongle_board = "xiao_ble"
 
 # automatically find all *.keymap filenames under ../config/keymap
 keymap_dir = Path(__file__).parent.parent / "config" / "keymap"
@@ -24,7 +24,7 @@ shield_boards = {
     "charybdis_left": "nice_nano",
     "charybdis_right_standalone": "nice_nano",
     "dongle_charybdis_right": "nice_nano",
-    "dongle_prospector": "seeeduino_xiao_ble",
+    "dongle_prospector": "xiao_ble",
     "settings_reset": "nice_nano",
 }
 

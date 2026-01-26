@@ -147,7 +147,7 @@ jobs:
 
         # Board overrides for specific shields
         declare -A BOARD_OVERRIDE=(
-          [dongle_prospector]="seeeduino_xiao_ble"
+          [dongle_prospector]="xiao_ble"
         )
 
         mkdir -p "$GITHUB_WORKSPACE/out/$NM"
